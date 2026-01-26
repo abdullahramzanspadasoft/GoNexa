@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./App.css";
 
 const features = [
@@ -111,9 +111,7 @@ const storiesList = [
   },
 ];
 
-const brands = ["Nike", "KFC", "Adidas", "Pizza Hut", "BYAKEA", "Bata", "Nike", "KFC", "Adidas"];
-
-export default function App() {
+function App() {
   return (
     <div className="app-container">
       <Navbar />
@@ -129,6 +127,8 @@ export default function App() {
     </div>
   );
 }
+
+export default App;
 
 /* ---------------- NAVBAR ---------------- */
 
@@ -253,9 +253,10 @@ function About() {
 /* ---------------- TRUSTED BY SECTION ---------------- */
 
 function TrustedBy() {
-  const brands = ["Nike", "KFC", "Adidas", "Pizza Hut", "BYAKEA", "Bata", "Nike", "KFC", "Adidas"];
-  const duplicatedBrands = [...brands, ...brands]; // Duplicate for seamless scroll
-  
+  const duplicatedBrands = [
+    "Nike", "KFC", "Adidas", "Pizza Hut", "BYAKEA", "Bata", "Nike", "KFC", "Adidas",
+    "Nike", "KFC", "Adidas", "Pizza Hut", "BYAKEA", "Bata", "Nike", "KFC", "Adidas"
+  ]; // Duplicate for seamless scroll
 
   return (
  <section className="trusted-section">
