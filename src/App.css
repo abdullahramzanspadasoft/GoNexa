@@ -1,4 +1,4 @@
-* {
+ * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -10,7 +10,7 @@ body {
 
 /* Main Container */
 .app-container {
-  background: url('hii.png') center/cover fixed no-repeat;
+  background: url('/hii.png') center/cover fixed no-repeat;
   color: #ffffff;
   min-height: 100vh;
   overflow-x: hidden;
@@ -327,50 +327,79 @@ color: white;
 .about-section {
   display: flex;
   justify-content: center;
-  padding: 80px 24px;
+  padding: 48px 16px;
   background-color: white;
 }
 
 .about-container {
   width: 100%;
   max-width: 1280px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 48px;
+  display: flex;
+  flex-direction: column; /* Mobile stacked */
+  gap: 32px;
   align-items: center;
 }
 
 @media (min-width: 768px) {
   .about-container {
-    grid-template-columns: 1fr 1fr;
+    flex-direction: row; /* Keep existing layout on large screens */
+    gap: 48px;
+    align-items: center;
   }
 }
 
 .about-image {
- 
   display: flex;
-
+  justify-content: center;
 }
 
 .about-image img {
-  width: 24vw;
-  height: 100%;
+  width: 100%;
+  max-width: 280px;
+  height: auto;
   object-fit: cover;
   border-radius: 20px;
-  margin-left: 38px;
+}
+
+@media (min-width: 480px) {
+  .about-image img {
+    max-width: 320px;
+  }
+}
+
+@media (min-width: 768px) {
+  .about-image img {
+    width: 24vw;
+    max-width: 400px;
+    margin-left: 38px;
+  }
 }
 
 .about-content {
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 24px;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .about-content {
+    gap: 50px;
+    text-align: left;
+  }
 }
 
 .about-title {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
   line-height: 1.3;
-  color: black
+  color: black;
+}
+
+@media (min-width: 480px) {
+  .about-title {
+    font-size: 32px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -381,9 +410,16 @@ color: white;
 
 .about-description {
   color: black;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.8;
-  
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .about-description {
+    font-size: 16px;
+    text-align: left;
+  }
 }
 
 .about-button {
@@ -395,8 +431,14 @@ color: white;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  width: fit-content;
+  width: 100%;
   font-size: 16px;
+}
+
+@media (min-width: 768px) {
+  .about-button {
+    width: fit-content;
+  }
 }
 
 .about-button:hover {
@@ -404,6 +446,7 @@ color: white;
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
 }
+
 
 /* Trusted By Section */
 @keyframes scroll {
@@ -902,7 +945,7 @@ color: white;
     justify-content: center;
     padding: 80px 24px;
 
-  background: url('Rectangle 3086.png') center/cover fixed no-repeat;
+  background: url('/Rectangle 3086.png') center/cover fixed no-repeat;
 
   }
 
@@ -1092,7 +1135,7 @@ color: white;
 
   /* Footer Styles */
   .footer {
-    background: url('hii.png') center/cover fixed no-repeat;
+    background: url('/hii.png') center/cover fixed no-repeat;
 
     color: #ffffff;
     padding: 64px 24px;

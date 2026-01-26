@@ -229,9 +229,9 @@ function About() {
   return (
     <section className="about-section">
       <div className="about-container">
-        <div className="about-image">
-          <img 
-            src="Mask group.png" 
+<div className="about-image">
+          <img
+            src="/Mask group.png"
             alt="Happy team members"
           />
         </div>
@@ -376,58 +376,58 @@ function Products() {
             GoNexa Built for founders & businesses who want clear insights, faster growth, & easier digital operations without switching between multiple tools
           </p>
         </div>
-<div className="products-grid">
-  {productsList.map((product, i) => (
-    <div
-      key={i}
-      style={{
-        backgroundImage: "url('/hii.png')",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        padding: "24px",
-        borderRadius: "16px",
-        display: "flex",
-        flexDirection: "column",
-        gap: "12px",
-        color: "#fff",
-        minHeight: "200px"
-      }}
-    >
-      <div
-        className="product-icon"
-        style={{
-          width: "40px",
-          height: "40px",
-          marginBottom: "4px"
-        }}
-      />
+        <div className="products-grid">
+          {productsList.map((product, i) => (
+            <div
+              key={i}
+              style={{
+                backgroundImage: `url(/hii.png)`,
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                padding: "24px",
+                borderRadius: "16px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "12px",
+                color: "#fff",
+                minHeight: "200px"
+              }}
+            >
+              <div
+                className="product-icon"
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  marginBottom: "4px"
+                }}
+              />
 
-      <h3
-        className="product-name"
-        style={{
-          margin: 0,
-          fontSize: "20px",
-          fontWeight: "600"
-        }}
-      >
-        {product.name}
-      </h3>
+              <h3
+                className="product-name"
+                style={{
+                  margin: 0,
+                  fontSize: "20px",
+                  fontWeight: "600"
+                }}
+              >
+                {product.name}
+              </h3>
 
-      <p
-        className="product-description"
-        style={{
-          margin: 0,
-          fontSize: "14px",
-          lineHeight: "1.5",
-          opacity: 0.85
-        }}
-      >
-        {product.description}
-      </p>
-    </div>
-  ))}
-</div>
+              <p
+                className="product-description"
+                style={{
+                  margin: 0,
+                  fontSize: "14px",
+                  lineHeight: "1.5",
+                  opacity: 0.85
+                }}
+              >
+                {product.description}
+              </p>
+            </div>
+          ))}
+        </div>
 
 
 
@@ -453,29 +453,29 @@ function Stories() {
         </div>
 
      <div className="stories-grid">
-  {storiesList.map((story, i) => (
-    <div
-      key={i}
-      className={`story-card ${i === 0 ? "story-card-large" : ""}`}
-      style={{
-        backgroundImage: "url('/king.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        borderRadius: "16px",
-        padding: "6px",
-        position: "relative",
-        color: "#fff"
-      }}
-    >
-      <div className="story-overlay" />
-      <div className="story-content">
-        <h3 className="story-title">{story.title}</h3>
-        <button className="story-button">Read More</button>
-      </div>
-    </div>
-  ))}
-</div>
+          {storiesList.map((story, i) => (
+            <div
+              key={i}
+              className={`story-card ${i === 0 ? "story-card-large" : ""}`}
+              style={{
+                backgroundImage: `url(/king.png)`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+                borderRadius: "16px",
+                padding: "6px",
+                position: "relative",
+                color: "#fff"
+              }}
+            >
+              <div className="story-overlay" />
+              <div className="story-content">
+                <h3 className="story-title">{story.title}</h3>
+                <button className="story-button">Read More</button>
+              </div>
+            </div>
+          ))}
+        </div>
 
         <button className="stories-view-all">View All</button>
       </div>
