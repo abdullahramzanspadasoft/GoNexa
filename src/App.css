@@ -31,17 +31,24 @@ body {
 
 .story-card {
   position: relative;
-  border-radius: 16px;
+  border-radius: 15px;
   overflow: hidden;
   display: flex;
-  align-items: flex-end;   /* 👈 content bottom me */
+  align-items: flex-end;
   padding: 24px;
-  min-height: 240px;
+  min-height: 235px;
+  width: 323px;
+  background: #080808;
+  border: 2px solid;
+  border-image-source: linear-gradient(180deg, rgba(84, 104, 255, 0.66) 0%, rgba(138, 91, 255, 0.66) 100%);
+  border-image-slice: 1;
+  opacity: 1;
 }
 
 .story-card-large {
   grid-row: span 2;
   min-height: 520px;
+  width: 100%;
 }
 
 /* Same padding + spacing */
@@ -69,15 +76,21 @@ body {
   width: 63vw;
   max-width: 1280px;
   backdrop-filter: blur(20px);
-background-color: #7575754A;
 
- opacity: 30;
-  border-radius: 10px;
   padding: 22px 36px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+
+
+
+   
+  border-radius: 15px;
+  background-color: rgba(117, 117, 117, 0.29); /* #7575754A converted to rgba */
+  opacity: 1;
+  transform: rotate(0deg);
 }
 
 .navbar-logo {
@@ -260,12 +273,20 @@ background-color: #7575754A;
 }
 
 .hero-title {
-  font-size: 32px;
-  font-weight: 100;
+ 
+
   line-height: 1.3;
   margin-bottom: 24px;
   color: #ffffff;
-  font-style:"Montserrat";
+
+
+    font-family: 'Montserrat', sans-serif;
+  font-weight: 400;           /* Normal weight */
+  font-style: normal;         /* Regular style in CSS is "normal" */
+  font-size: 46px;
+  line-height: 119%;          /* 119% of font size */
+  letter-spacing: 0;          /* 0 spacing */
+  text-align: center;
 }
 
 @media (min-width: 768px) {
@@ -381,34 +402,90 @@ color: white;
 }
 
 .feature-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
-  border: 1px solid rgba(99, 102, 241, 0.3);
-  border-radius: 24px;
+  border-radius: 15px;
+  border: 2px solid;
   padding: 24px;
   transition: all 0.3s ease;
   cursor: pointer;
+  background-color: #080808;
+    opacity: 1;
+  transform: rotate(0deg);
+    width: 323px;
+  height: 235px;
 }
 
+
+.feature-card::before {
+  content: "";
+  position: absolute;
+  top: -2px; 
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 17px; /* border radius + border width */
+  padding: 2px;
+  background: linear-gradient(180deg, rgba(84, 104, 255, 0.66) 0%, rgba(138, 91, 255, 0.66) 100%);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude; 
+  pointer-events: none;
+}
 .feature-card:hover {
   transform: translateY(-4px);
   border-color: rgba(99, 102, 241, 0.6);
   box-shadow: 0 20px 40px rgba(99, 102, 241, 0.1);
 }
 
-.feature-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+.feature-icon-container {
+  position: relative;
+  width: 45px;
+  height: 45px;
   margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-icon-top {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.feature-icon-bottom {
+  position: absolute;
+  z-index: 1;
+}
+
+.feature-icon {
+  width: 45px;
+  height: 45px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .feature-title {
-  font-size: 18px;
-  font-weight: 600;
+ 
   margin-bottom: 8px;
   color: #ffffff;
   text-align: left;
+
+
+  opacity: 1;
+  transform: rotate(0deg);
+
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-style: normal; /* "SemiBold" is not a valid CSS font-style; use font-weight instead */
+  font-size: 25px;
+  line-height: 112%; /* converted from 112.00000000000001% */
+  letter-spacing: 0;
 }
 
 .feature-description {
@@ -416,6 +493,18 @@ color: white;
   font-size: 14px;
   line-height: 1.6;
   text-align: left;
+    opacity: 1;
+  transform: rotate(0deg);
+
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-style: normal; /* "Regular" is handled by font-weight */
+  font-size: 13px;
+  line-height: 129%;
+  letter-spacing: 0;
+   width: 286px;
+  height: 51px;
+
 }
 
 /* About Section Styles */
@@ -433,6 +522,7 @@ color: white;
   flex-direction: column; /* Mobile stacked */
   gap: 32px;
   align-items: center;
+  justify-content: center;
 }
 
 @media (min-width: 768px) {
@@ -454,6 +544,7 @@ color: white;
   height: auto;
   object-fit: cover;
   border-radius: 20px;
+
 }
 
 @media (min-width: 480px) {
@@ -504,16 +595,24 @@ color: white;
 }
 
 .about-description {
-  color: black;
-  font-size: 14px;
-  line-height: 1.8;
-  text-align: center;
-}
+  
+  transform: rotate(0deg);     /* angle: 0 deg */
+  opacity: 1;
+      width: 888px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;            /* normal */
+  font-style: normal;          /* Regular = normal */
+  font-size: 24px;
+  line-height: 164%;           /* 164% of font size */
+  letter-spacing: -1%;         /* fine, CSS accepts % */
+  text-align: justify;
+  color: #263238;    }
 
 @media (min-width: 768px) {
   .about-description {
-    font-size: 16px;
-    text-align: left;
+    font-size: 10px;
+    text-align: center;
+    
   }
 }
 
@@ -758,7 +857,7 @@ color: white;
   border: 1px solid white;
   color: white;
   padding: 10px 24px;
-  border-radius: 50px;
+  border-radius: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -766,9 +865,13 @@ color: white;
 }
 
 .pricing-toggle-btn.active {
-  background: transparent;
-  color: white;
-  border-color: white;
+
+  transform: rotate(0deg);      /* angle: 0 deg */
+  opacity: 1;
+
+  border-radius: 15px;
+  border: 1.5px solid #FFFFFF; /* combines border-width and border color */
+  background-color: rgba(255, 255, 255, 0.26)
 }
 
 .pricing-toggle-btn:hover {
@@ -915,11 +1018,10 @@ color: white;
 
 .products-container {
   width: 100%;
-  max-width: 1200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 48px;
+  max-width: 1199px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 35px;
 }
 
 .products-header {
@@ -970,19 +1072,15 @@ color: white;
 
 .product-card {
   background: linear-gradient(135deg, rgba(15, 15, 30, 0.95) 0%, rgba(20, 20, 40, 0.95) 100%), url('/hii.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  border: 1px solid rgba(99, 102, 241, 0.3);
-  border-radius: 20px;
-  padding: 32px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  border-radius: 15px;
+  border: 2px solid;
+  padding: 24px;
   transition: all 0.3s ease;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
+    opacity: 1;
+  transform: rotate(0deg);
+    width: 323px;
+  height: 235px;
 }
 
 .product-card::before {
@@ -1010,19 +1108,38 @@ color: white;
 
 
 .product-name {
-  font-size: 18px;
-  font-weight: 700;
+ margin-bottom: 8px;
   color: #ffffff;
-  position: relative;
-  z-index: 1;
+  text-align: left;
+
+
+  opacity: 1;
+  transform: rotate(0deg);
+
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-style: normal; /* "SemiBold" is not a valid CSS font-style; use font-weight instead */
+  font-size: 25px;
+  line-height: 112%; /* converted from 112.00000000000001% */
+  letter-spacing: 0;
 }
 
 .product-description {
+  color: #999999;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
   line-height: 1.6;
-  position: relative;
-  z-index: 1;
+  text-align: left;
+    opacity: 1;
+  transform: rotate(0deg);
+
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-style: normal; /* "Regular" is handled by font-weight */
+  font-size: 13px;
+  line-height: 129%;
+  letter-spacing: 0;
+   width: 286px;
+  height: 51px;
 }
 
 .products-button-container {
@@ -1194,7 +1311,7 @@ color: white;
   .story-content {
     position: relative;
     z-index: 3;
-    padding: 24px;
+    padding: 3px;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -1202,6 +1319,7 @@ color: white;
 
   .story-title {
     font-size: 18px;
+    font-style: bold;
     font-weight: 700;
     color: #ffffff;
     line-height: 1.4;
