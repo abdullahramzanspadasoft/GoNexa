@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 
 const features = [
@@ -133,6 +133,8 @@ export default App;
 /* ---------------- NAVBAR ---------------- */
 
 function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <div className="navbar-wrapper">
       <div className="navbar">
@@ -146,7 +148,7 @@ function Navbar() {
 </svg>
 </h1>
 
-        <div className="navbar-links">
+        <div className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
           <a href="#">Products</a>
           <a href="#">Pricing</a>
           <a href="#">Blogs</a>
@@ -155,17 +157,21 @@ function Navbar() {
         </div>
 
         <button className="navbar-button">Login</button>
+
+        <button className="navbar-menu-icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </div>
   );
 }
 
-/* ---------------- HERO ---------------- */
 
 function Hero() {
   return (
     <section className="hero-section">
-      {/* Glow Backgrounds */}
       <div className="glow-bg-1" />
       <div className="glow-bg-2" />
 
@@ -335,20 +341,23 @@ function Pricing() {
         <div className="pricing-cards">
           {pricingPlans.map((plan, i) => (
             <div key={i} className="pricing-card">
-        
+              <div className="pricing-card-header-top">
                 <h3 className="pricing-card-name">{plan.name}</h3>
-                <p className="pricing-card-price">{isYearly ? plan.yearlyPrice : plan.monthlyPrice}</p>
-         
-
-              <div className="pricing-card-features">
-                {plan.features.map((feature, idx) => (
-                  <div key={idx} className="pricing-feature">
-                    {feature}
-                  </div>
-                ))}
               </div>
 
-              <button className="pricing-button">Buy Now</button>
+              <div className="pricing-card-content">
+                <p className="pricing-card-price">{isYearly ? plan.yearlyPrice : plan.monthlyPrice}</p>
+
+                <div className="pricing-card-features">
+                  {plan.features.map((feature, idx) => (
+                    <div key={idx} className="pricing-feature">
+                      {feature}
+                    </div>
+                  ))}
+                </div>
+
+                <button className="pricing-button">Buy Now</button>
+              </div>
             </div>
           ))}
         </div>

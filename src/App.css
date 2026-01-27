@@ -66,11 +66,12 @@ body {
 
 
 .navbar {
-  width: 100%;
+  width: 63vw;
   max-width: 1280px;
   backdrop-filter: blur(20px);
-  background: rgba(255, 255, 255, 0.05);
- 
+background-color: #7575754A;
+
+ opacity: 30;
   border-radius: 10px;
   padding: 22px 36px;
   display: flex;
@@ -86,16 +87,109 @@ body {
 }
 
 .navbar-links {
-  display: none;
+  display: flex;
   gap: 32px;
   font-size: 14px;
-  color:white;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .navbar-links {
+    position: absolute;
+    top: 70px;
+    left: 10px;
+    right: 10px;
+    flex-direction: column;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%);
+    padding: 20px;
+    gap: 16px;
+    display: none;
+    z-index: 100;
+    border-radius: 8px;
+    min-width: calc(100vw - 60px);
+  }
+
+  .navbar-links.active {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .navbar-links.active::after {
+    content: "";
+    width: 100%;
+    height: 60px;
+  }
 }
 
 .navbar-links a {
   color: white;
   text-decoration: none;
   transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: #b0b0b0;
+}
+
+/* Hamburger Menu Icon */
+.navbar-menu-icon {
+  display: none;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  gap: 6px;
+  padding: 8px;
+  z-index: 101;
+}
+
+.navbar-menu-icon span {
+  width: 24px;
+  height: 2.5px;
+  background-color: #ffffff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    width: 95vw;
+    padding: 16px 20px;
+    position: relative;
+  }
+
+  .navbar-menu-icon {
+    display: flex;
+  }
+
+  .navbar-button {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 10px;
+    right: 10px;
+    width: calc(100% - 20px);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    z-index: 100;
+    margin-top: 10px;
+  }
+
+  .navbar-links.active ~ .navbar-button {
+    display: block;
+  }
+
+  .navbar-button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
 }
 
 .navbar-links a:hover {
@@ -695,36 +789,51 @@ color: white;
 }
 
 .pricing-card {
-  background: white;
+  background: rgba(255, 255, 255, 0.13);
   border-radius: 20px;
-  padding: 32px;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 0;
   transition: all 0.3s ease;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .pricing-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
 }
 
-.pricing-card-header {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.pricing-card-header-top {
+  padding: 20px 32px;
+  border-radius: 28px 20px 0 0;
+  background-color: #FFFFFF21;
 }
 
 .pricing-card-name {
   font-size: 24px;
   font-weight: 700;
-  color: #1a1a1a;
+  color: #ffffff;
+  margin: 0;
+}
+
+.pricing-card-content {
+  background: #ffffff;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  border-radius: 0 0 20px 20px;
+      border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 }
 
 .pricing-card-price {
   font-size: 28px;
   font-weight: 700;
   color: #1a1a1a;
+  margin: 0;
 }
 
 .pricing-card-features {
@@ -756,7 +865,7 @@ color: white;
   color: white;
   border: none;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
