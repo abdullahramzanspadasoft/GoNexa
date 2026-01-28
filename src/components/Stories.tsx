@@ -94,7 +94,8 @@ export function Stories() {
                 <button 
                   style={{
                     marginTop: '20px', 
-                    backgroundColor: '#6366f1',
+                    background: "linear-gradient(90deg, #5865f2 0%, #a855f7 100%)",
+
                     color: 'white',
                     border: 'none',
                     padding: '10px 24px',
@@ -115,14 +116,15 @@ export function Stories() {
         <button 
           className="stories-view-all"
           style={{
-            display: 'block',
-            margin: '0 auto',
-            backgroundColor: '#6366f1',
-            color: 'white',
-            border: 'none',
-            padding: '12px 32px',
-            borderRadius: '8px',
-            cursor: 'pointer'
+            background: "linear-gradient(90deg, #5865f2 0%, #a855f7 100%)",
+            padding: "16px 70px",
+            color: "white",
+            border: "none",
+            borderRadius: "12px",
+            fontSize: "18px",
+            fontWeight: 700,
+            cursor: "pointer",
+            transition: "transform 0.2s, opacity 0.2s",
           }}
         >
           View All

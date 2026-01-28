@@ -5,12 +5,12 @@
 }
 
 body {
-  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 /* Main Container */
 .app-container {
-  background: url('/./public/hii.jpeg') center/cover fixed no-repeat;
+  background: url('/./public/GoNexa.Header-image.jpg.jpeg') center/cover fixed no-repeat;
   color: #ffffff;
   min-height: 100vh;
   overflow-x: hidden;
@@ -905,13 +905,13 @@ font-size: 170px;
   background: transparent;
   border: 1px solid white;
   color: white;
-  padding: 10px 24px;
+  padding: 18px 100px;
   border-radius: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 17px;
-  padding: 16px 70px;
+  padding: 16px 33px;
 
 }
 
@@ -919,10 +919,13 @@ font-size: 170px;
 font-size: 17px;
   transform: rotate(0deg);      /* angle: 0 deg */
   opacity: 1;
-  padding: 18px 100px;
   border-radius: 15px;
   border: 1.5px solid #FFFFFF; /* combines border-width and border color */
-  background-color: rgba(255, 255, 255, 0.26)
+  background-color: rgba(255, 255, 255, 0.26);
+  padding: 16px 33px;
+  transition: all 0.3s ease;
+  
+
 }
 
 .pricing-toggle-btn:hover {
@@ -1015,10 +1018,10 @@ font-size: 17px;
 }
 
 .pricing-button {
-  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+  background: linear-gradient(90deg, #5865f2 0%, #a855f7 100%);
   color: white;
   border: none;
-  padding: 12px 24px;
+  padding: 17px 24px;
   border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
@@ -1028,9 +1031,7 @@ font-size: 17px;
 }
 
 .pricing-button:hover {
-  opacity: 0.9;
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
 }
 
 .pricing-dots {
@@ -1176,7 +1177,7 @@ font-size: 17px;
 }
 
 .product-description {
-  color: #999999;
+  color: white;
   font-size: 14px;
   line-height: 1.6;
   text-align: left;
@@ -1375,7 +1376,6 @@ font-size: 17px;
   }
 
   .stories-view-all {
-    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
     color: white;
     border: none;
     padding: 14px 48px;
@@ -1394,7 +1394,7 @@ font-size: 17px;
 
   /* Footer Styles */
   .footer {
-    background: url('/hii.png') center/cover fixed no-repeat;
+    background: url('../public//GoNexa-Footer.jpg.jpeg') center/cover fixed no-repeat;
 
     color: #ffffff;
     padding: 64px 24px;
@@ -1491,9 +1491,9 @@ font-size: 17px;
   }
 
   .footer-social {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, auto);
     gap: 10px;
-    flex-wrap: wrap;
     justify-content: center;
   }
 

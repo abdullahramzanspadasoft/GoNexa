@@ -51,11 +51,11 @@ export function Products() {
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
-                padding: "32px",
+                padding: "31px 32px",
                 borderRadius: "20px",
                 display: "flex",
                 flexDirection: "column",
-                gap: "16px",
+                gap: "11px",
                 color: "#fff",
                 minHeight: "220px",
                 position: "relative",
@@ -130,31 +130,28 @@ export function Products() {
         </div>
 
         <div className="products-button-container" style={{ textAlign: "center", marginTop: "48px" }}>
-          <button style={{
-            width: '336px',
-            height: '63px',
-            border: 'none',
-            borderRadius: '10px',
-            fontFamily: 'Montserrat, sans-serif',
-            fontWeight: 600,
-            fontSize: '30px',
-            lineHeight: 1,
-            letterSpacing: 0,
-            textAlign: 'center',
-            verticalAlign: 'middle',
-            opacity: 1,
-            color:"white",
-            background: 'linear-gradient(88.37deg, #4E69FF 0%, #8A5BFF 99.47%)'
-          }}>
+          <button   style={{
+    padding: "16px 70px",
+    background: "linear-gradient(90deg, #5865f2 0%, #a855f7 100%)",
+    color: "white",
+    border: "none",
+    borderRadius: "12px",
+    fontSize: "18px",
+    fontWeight: 700,
+    cursor: "pointer",
+    transition: "transform 0.2s, opacity 0.2s",
+  }}>
             Joins <span
               style={{
-                fontFamily: 'Montserrat, sans-serif',
-                fontWeight: 800,
-                fontSize: '30px',
-                lineHeight: 1,
-                letterSpacing: 0,
-                textAlign: 'center',
-                verticalAlign: 'middle'
+
+                color: "white",
+                fontWeight: 700,
+                fontSize: "18px",
+                cursor: "pointer",
+                transition: "transform 0.2s, opacity 0.2s",
+                borderRadius: "12px",
+                background: "linear-gradient(90deg, #5865f2 0%, #a855f7 100%)",
+                border: "none",
               }}>GoNexa</span>
           </button>
         </div>

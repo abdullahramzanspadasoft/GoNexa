@@ -1,6 +1,6 @@
 export function TrustedBy() {
   const brands = {  
-    "Nike": `<svg width="66" height="67" viewBox="0 0 66 67" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    "Nike": `<svg width="50" height="50" viewBox="0 0 66 67" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <rect width="65.5933" height="66.3558" fill="url(#pattern0_795_2802)"/>
 <defs>
 <pattern id="pattern0_795_2802" patternContentUnits="objectBoundingBox" width="1" height="1">
@@ -10,7 +10,7 @@ export function TrustedBy() {
 </defs>
 </svg>
 `,
-    "KFC": `<svg width="104" height="33" viewBox="0 0 104 33" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    "KFC": `<svg width="50" height="50" viewBox="0 0 104 33" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <rect width="103.729" height="32.7965" fill="url(#pattern0_795_2799)"/>
 <defs>
 <pattern id="pattern0_795_2799" patternContentUnits="objectBoundingBox" width="1" height="1">
@@ -20,7 +20,7 @@ export function TrustedBy() {
 </defs>
 </svg>
 `,
-    "Adidas": `<svg width="81" height="81" viewBox="0 0 81 81" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    "Adidas": `<svg width="50" height="50" viewBox="0 0 81 81" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <rect width="80.8476" height="80.8473" fill="url(#pattern0_795_2801)"/>
 <defs>
 <pattern id="pattern0_795_2801" patternContentUnits="objectBoundingBox" width="1" height="1">
@@ -30,7 +30,7 @@ export function TrustedBy() {
 </defs>
 </svg>
 `,
-    "Pizza Hut": `<svg width="90" height="49" viewBox="0 0 90 49" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    "Pizza Hut": `<svg width="50" height="50" viewBox="0 0 90 49" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <rect width="90" height="48.0508" fill="url(#pattern0_795_2811)"/>
 <defs>
 <pattern id="pattern0_795_2811" patternContentUnits="objectBoundingBox" width="1" height="1">
@@ -40,7 +40,7 @@ export function TrustedBy() {
 </defs>
 </svg>
 `,
-    "BYAKEA": `<svg width="97" height="23" viewBox="0 0 97 23" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    "BYAKEA": `<svg width="50" height="50" viewBox="0 0 97 23" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <rect width="96.8646" height="22.8813" fill="url(#pattern0_795_2803)"/>
 <defs>
 <pattern id="pattern0_795_2803" patternContentUnits="objectBoundingBox" width="1" height="1">
@@ -50,7 +50,7 @@ export function TrustedBy() {
 </defs>
 </svg>
 `,
-    "Bata": `<svg width="121" height="90" viewBox="0 0 121 90" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    "Bata": `<svg width="50" height="50" viewBox="0 0 121 90" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <rect width="120.508" height="90" fill="url(#pattern0_795_2813)"/>
 <defs>
 <pattern id="pattern0_795_2813" patternContentUnits="objectBoundingBox" width="1" height="1">

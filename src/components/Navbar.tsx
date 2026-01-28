@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Logo } from "../icons/Logo";
+// import { Logo } from "../icons/Logo";
+import logo from ".././../public/Asset 2-8.png";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -8,8 +9,11 @@ export function Navbar() {
     <div className="navbar-wrapper">
       <div className="navbar">
         <h1 className="navbar-logo">
-          <Logo />
-        </h1>
+          {/* <Logo /> */}
+
+          <img src={logo}
+          style={{width:"145px"}}
+          alt="GoNexa Logo" />        </h1>
 
         <div className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
           <a href="#">Products</a>
