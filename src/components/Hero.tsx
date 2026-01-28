@@ -6,8 +6,11 @@ export function Hero() {
 
       <div className="hero-content">
         <h2 className="hero-title">
-          The All-in-One solution for <br />
-          social media management & growth
+          The All-in-One solution for
+          <br className="hero-break" />
+          social media management
+          <br className="hero-break" />
+          & growth
         </h2>
 
         <p className="hero-description">
