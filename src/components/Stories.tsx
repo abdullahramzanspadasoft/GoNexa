@@ -1,7 +1,26 @@
+import { useState, useEffect } from "react";
 import data from "../data.json";
 import king from '../../public/king.png';
 
 export function Stories() {
+  const [showAll, setShowAll] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 640);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const displayedStories = isMobile 
+    ? (showAll ? data.storiesList : data.storiesList.slice(0, 3))
+    : data.storiesList;
+
   return (
     <section className="stories-section">
       <style>
@@ -32,9 +51,20 @@ export function Stories() {
             .stories-grid-adaptive {
               grid-template-columns: 1fr;
               grid-auto-rows: auto;
+              gap: 16px;
+              padding: 24px 0;
             }
             .story-card-adaptive {
-              min-height: 320px;
+              min-height: 280px;
+            }
+            .stories-title {
+              font-size: 28px !important;
+              margin-bottom: 12px !important;
+            }
+            .stories-description {
+              font-size: 14px !important;
+              padding: 0 10px;
+              line-height: 1.5 !important;
             }
           }
         `}
@@ -49,7 +79,7 @@ export function Stories() {
         </div>
 
         <div className="stories-grid-adaptive">
-          {data.storiesList.map((story, i) => (
+          {displayedStories.map((story, i) => (
             <div
               key={i}
               className={`story-card-adaptive story-card-${i}`}
@@ -115,6 +145,7 @@ export function Stories() {
 
         <button 
           className="stories-view-all"
+          onClick={() => setShowAll(!showAll)}
           style={{
             background: "linear-gradient(90deg, #5865f2 0%, #a855f7 100%)",
             padding: "16px 70px",
@@ -125,9 +156,10 @@ export function Stories() {
             fontWeight: 700,
             cursor: "pointer",
             transition: "transform 0.2s, opacity 0.2s",
+            display: isMobile ? "block" : "block",
           }}
         >
-          View All
+          {showAll ? "Show Less" : "View All"}
         </button>
       </div>
     </section>

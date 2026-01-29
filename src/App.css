@@ -299,7 +299,7 @@ body {
 
 
     font-family: 'Montserrat', sans-serif;
-  font-weight: 400;           /* Normal weight */
+  font-weight: 300;           /* Normal weight */
   font-style: normal;         /* Regular style in CSS is "normal" */
   font-size: 46px;
   line-height: 119%;          /* 119% of font size */
@@ -885,7 +885,7 @@ color: white;
 
 .stats-number {
 
-  font-weight: 1000;
+  font-weight: 900;
 font-size: 170px;
   background: linear-gradient(90deg, #5865f2 0%, #a855f7 100%);
   -webkit-background-clip: text;
@@ -1097,6 +1097,8 @@ font-size: 170px;
   width: 100%;
   overflow: hidden;
   padding: 0 16px;
+  display: flex;
+  justify-content: center;
 }
 
 @media (min-width: 768px) {
@@ -1109,6 +1111,7 @@ font-size: 170px;
   display: flex;
   gap: 24px;
   width: 100%;
+  max-width: 360px;
   overflow-x: auto;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
@@ -1124,6 +1127,7 @@ font-size: 170px;
 
 @media (min-width: 768px) {
   .pricing-cards {
+    max-width: 1200px;
     scroll-snap-type: none;
     padding-bottom: 0;
   }
@@ -1139,15 +1143,17 @@ font-size: 170px;
   transition: all 0.3s ease;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  flex: 0 0 calc(100% - 24px);
-  scroll-snap-align: start;
+  flex: 0 0 100%;
+  scroll-snap-align: center;
   min-width: 280px;
+  max-width: 340px;
 }
 
 @media (min-width: 768px) {
   .pricing-card {
     flex: 0 0 calc(33.333% - 16px);
     min-width: auto;
+    max-width: none;
   }
 }
 
@@ -1257,6 +1263,7 @@ font-size: 170px;
   gap: 8px;
   justify-content: center;
   margin-top: 24px;
+  align-items: center;
 }
 
 .pricing-dot {
@@ -1265,7 +1272,7 @@ font-size: 170px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.4);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
   flex-shrink: 0;
 }
 
@@ -1281,16 +1288,17 @@ font-size: 170px;
 
 @media (max-width: 768px) {
   .pricing-dots {
-    gap: 8px;
+    gap: 6px;
+    margin-top: 16px;
   }
   
   .pricing-dot {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
   }
   
   .pricing-dot.active {
-    width: 24px;
+    width: 20px;
   }
 }
 

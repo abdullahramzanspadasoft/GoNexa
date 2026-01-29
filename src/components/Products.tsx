@@ -1,5 +1,55 @@
 import data from "../data.json";
 
+const productIcons = [
+  (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" strokeWidth="2" />
+      <path d="M8 2v4M16 2v4M3 9h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  ),
+  (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" strokeWidth="2" />
+      <path d="M8 2v4M16 2v4M3 9h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M8 13h2M12 13h2M16 13h2M8 17h2M12 17h2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  ),
+  (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M4 20h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M7 17V10M12 17V7M17 17v-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  ),
+  (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M7 17h-2a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v1"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path d="M11 12h8a3 3 0 0 1 3 3v5l-3-2h-8a3 3 0 0 1-3-3v-1a3 3 0 0 1 3-3z" stroke="currentColor" strokeWidth="2" />
+    </svg>
+  ),
+  (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z" stroke="currentColor" strokeWidth="2" />
+      <path d="m4 8 8 6 8-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  ),
+  (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M20 12a8 8 0 0 1-12.3 6.7L4 20l1.3-3.7A8 8 0 1 1 20 12z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path d="M9.5 9.5h.01M14.5 9.5h.01M9 14h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  ),
+];
+
 export function Products() {
   return (
     <section className="products-section" style={{ padding: "80px 0", backgroundColor: "#f8f9fa" }}>
@@ -61,39 +111,21 @@ export function Products() {
                 position: "relative",
               }}
             >
-              <div style={{ width: "45px", height: "45px", marginBottom: "8px" }}>
-                <svg
-                  width="45"
-                  height="45"
-                  viewBox="0 0 45 45"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect width="45" height="45" rx="7" fill={`url(#paint0_linear_${i})`} />
-                  <g transform="translate(8.5, 9.5) scale(0.65)">
-                    <path
-                      d="M0 19.1158V6.16125C0 4.5548 0.624877 3.01301 1.73937 1.86449L1.79283 1.81006C2.94078 0.656061 4.4977 0.0078867 6.12106 0.0078834L8.1488 0C8.68256 7.29894e-06 9.11528 0.434999 9.11528 0.971587C9.11528 1.50818 8.68256 1.94317 8.1488 1.94317L6.12106 1.95106C5.01027 1.95106 3.94504 2.39457 3.15965 3.1841C2.37426 3.97364 1.93297 5.04462 1.93297 6.16125V19.1158C1.93297 20.2324 2.37417 21.3031 3.15961 22.0928L3.19665 22.1295C3.97839 22.8961 5.0277 23.326 6.12106 23.326H21.5848C22.6956 23.326 23.7608 22.8823 24.5462 22.0928C25.3317 21.3031 25.7729 20.2324 25.7729 19.1158V11.3431C25.7729 10.8065 26.2056 10.3715 26.7394 10.3715C27.2732 10.3715 27.7059 10.8065 27.7059 11.3431V19.1158C27.7059 20.7478 27.061 22.3128 25.913 23.4668C24.7652 24.6207 23.2083 25.2692 21.5848 25.2692H6.12106C4.4976 25.2691 2.94071 24.6207 1.79283 23.4669C0.644944 22.3128 0 20.7478 0 19.1158Z"
-                      fill="white"
-                    />
-                    <rect x="7.0918" y="6.08167" width="5.06547" height="5.06547" rx="1" fill="white" />
-                    <rect x="15.1929" y="6.08167" width="5.06547" height="5.06547" rx="1" fill="white" />
-                    <rect x="15.1929" y="14.1872" width="5.06547" height="5.06547" rx="1" fill="white" />
-                    <rect x="7.0918" y="14.1872" width="5.06547" height="5.06547" rx="1" fill="white" />
-                  </g>
-                  <defs>
-                    <linearGradient
-                      id={`paint0_linear_${i}`}
-                      x1="1.57343"
-                      y1="37"
-                      x2="42.1615"
-                      y2="8.898"
-                      gradientUnits="userSpaceOnUse"
-                    >
-                      <stop stopColor="#4C6AFF" />
-                      <stop offset="0.969529" stopColor="#8A5BFF" />
-                    </linearGradient>
-                  </defs>
-                </svg>
+              <div
+                style={{
+                  width: "45px",
+                  height: "45px",
+                  marginBottom: "8px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "10px",
+                  background: "linear-gradient(180deg, #4C6AFF 0%, #8A5BFF 100%)",
+                  color: "#fff",
+                  flexShrink: 0,
+                }}
+              >
+                {productIcons[i % productIcons.length]}
               </div>
 
               <h3

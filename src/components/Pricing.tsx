@@ -86,7 +86,7 @@ export function Pricing() {
                     ))}
                   </div>
 
-                  <button className="pricing-button">Buy Now</button>
+                  <button className="pricing-button">Get Started</button>
                 </div>
               </div>
             ))}
