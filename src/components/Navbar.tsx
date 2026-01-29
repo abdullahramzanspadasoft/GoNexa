@@ -23,7 +23,16 @@ export function Navbar() {
           <a href="">Affiliate</a>
         </div>
 
-        <button className="navbar-button">Login</button>
+        <button
+          className="navbar-button"
+          type="button"
+          onClick={() => {
+            window.location.hash = "#/login";
+            setIsMenuOpen(false);
+          }}
+        >
+          Login
+        </button>
 
         <button className="navbar-menu-icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           <span></span>
