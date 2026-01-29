@@ -70,22 +70,30 @@ export function Products() {
           @media (max-width: 640px) {
             .products-section {
               padding: 40px 16px !important;
+              display: flex !important;
+              justify-content: center !important;
             }
             .products-container {
-              display: flex;
-              flex-direction: column;
-              align-items: center;
+              display: flex !important;
+              flex-direction: column !important;
+              align-items: center !important;
+              padding: 0 16px !important;
+            }
+            .products-header {
+              width: 100%;
             }
             .products-grid {
-              grid-template-columns: 1fr;
-              gap: 16px;
-              max-width: 360px;
-              width: 100%;
-              justify-items: center;
+              display: flex !important;
+              flex-direction: column !important;
+              align-items: center !important;
+              gap: 16px !important;
+              max-width: 360px !important;
+              width: 100% !important;
             }
             .products-grid > div {
               width: 100% !important;
               max-width: 340px !important;
+              margin: 0 auto !important;
             }
             .products-title {
               font-size: 28px !important;
@@ -93,6 +101,11 @@ export function Products() {
             .products-description {
               font-size: 14px !important;
               padding: 0 10px;
+            }
+            .products-button-container {
+              width: 100%;
+              display: flex;
+              justify-content: center;
             }
             .products-button-container button {
               width: 100%;
