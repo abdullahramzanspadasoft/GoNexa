@@ -69,14 +69,36 @@ export function Products() {
 
           @media (max-width: 640px) {
             .products-section {
-              padding: 40px 0 !important;
+              padding: 40px 16px !important;
+            }
+            .products-container {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
             }
             .products-grid {
               grid-template-columns: 1fr;
               gap: 16px;
+              max-width: 360px;
+              width: 100%;
+              justify-items: center;
+            }
+            .products-grid > div {
+              width: 100% !important;
+              max-width: 340px !important;
             }
             .products-title {
               font-size: 28px !important;
+            }
+            .products-description {
+              font-size: 14px !important;
+              padding: 0 10px;
+            }
+            .products-button-container button {
+              width: 100%;
+              max-width: 280px;
+              padding: 14px 24px !important;
+              font-size: 16px !important;
             }
           }
         `}

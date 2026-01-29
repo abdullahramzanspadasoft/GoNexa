@@ -3,6 +3,30 @@ import data from "../data.json";
 export function Features() {
   return (
     <section className="features-section">
+      <style>{`
+        @media (max-width: 640px) {
+          .features-section {
+            padding: 0 16px 60px 16px !important;
+          }
+          .features-container {
+            max-width: 360px !important;
+            margin: 0 auto;
+            justify-items: center;
+          }
+          .feature-card {
+            width: 100% !important;
+            max-width: 340px !important;
+            height: auto !important;
+            min-height: 220px;
+          }
+          .feature-title {
+            font-size: 20px !important;
+          }
+          .feature-description {
+            font-size: 14px !important;
+          }
+        }
+      `}</style>
       <div className="features-container">
         {data.features.map((title, i) => (
           <div
