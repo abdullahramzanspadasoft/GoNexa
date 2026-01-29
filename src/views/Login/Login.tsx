@@ -10,7 +10,7 @@ export function Login() {
         <div className="login-card">
           <h2>Create an account</h2>
           <p className="login-subtitle">
-            Already have an account? <button type="button">Login</button>
+            Already have an account?s <button type="button">Login</button>
           </p>
 
           <div className="login-form">
