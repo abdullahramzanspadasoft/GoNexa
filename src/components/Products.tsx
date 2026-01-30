@@ -78,6 +78,7 @@ export function Products() {
               flex-direction: column !important;
               align-items: center !important;
               padding: 0 16px !important;
+              gap: 0px
             }
             .products-header {
               width: 100%;
@@ -217,7 +218,6 @@ export function Products() {
                 cursor: "pointer",
                 transition: "transform 0.2s, opacity 0.2s",
                 borderRadius: "12px",
-                background: "linear-gradient(90deg, #5865f2 0%, #a855f7 100%)",
                 border: "none",
               }}>GoNexa</span>
           </button>

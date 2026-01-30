@@ -149,7 +149,7 @@ export function Stories() {
           onClick={() => setShowAll(!showAll)}
           style={{
             background: "linear-gradient(90deg, #5865f2 0%, #a855f7 100%)",
-            padding: "16px 70px",
+            padding: "17px 77px",
             color: "white",
             border: "none",
             borderRadius: "12px",

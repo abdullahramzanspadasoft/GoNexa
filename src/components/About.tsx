@@ -38,17 +38,18 @@ export function About() {
 
           .about-image img {
             border-radius: 20px;
+            padding: 1px;
           }
           
           .about-title {
-            font-size: 24px !important;
+            font-size: 31px !important;
             line-height: 1.3 !important;
             margin-bottom: 16px !important;
             font-weight: 600 !important;
           }
 
           .about-description {
-            font-size: 14px !important;
+            font-size: 16px !important;
             line-height: 1.6 !important;
             margin-bottom: 24px !important;
             color: #666 !important;
@@ -73,7 +74,7 @@ export function About() {
         </div>
 
         <div className="about-content">
-          <h2 className="about-title">Elevate Your Business with GoNexa</h2>
+          <h2 className="about-title">Elevate Your Business <br></br>with GoNexa</h2>
 
           <p className="about-description">
             GoNexa helps creators and businesses manage social media the smart way without switching between multiple apps. We bring scheduling, analytics, inbox, email marketing, and WhatsApp automation into one simple platform to make growth faster and easier. Our goal is to keep brands consistent, connected, and in control from one dashboard because success should feel smooth, not complicated.

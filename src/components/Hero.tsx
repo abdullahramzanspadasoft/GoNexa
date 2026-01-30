@@ -24,18 +24,18 @@ export function Hero() {
           }
           .hero-form {
             flex-direction: column !important;
-            gap: 12px !important;
+            gap: 16px !important;
             width: 100%;
           }
           .hero-button {
             width: 100% !important;
-            max-width: 280px;
+            max-width: 320px;
             padding: 14px 24px !important;
             font-size: 16px !important;
           }
           .hero-input {
             width: 100% !important;
-            max-width: 280px;
+            max-width: 320px;
             padding: 14px 20px !important;
             font-size: 14px !important;
           }
@@ -47,7 +47,7 @@ export function Hero() {
       <div className="hero-content">
         <h2 className="hero-title">
           The All-in-One solution for
-          <br className="hero-break" />
+          <br />
           social media management
           <br className="hero-break" />
           & growth
@@ -59,15 +59,16 @@ export function Hero() {
         </p>
 
         <div className="hero-form">
-          <button className="hero-button">
-            Get started for free
-          </button>
-          <input
+             <input
             type="email"
             placeholder="Enter your email"
             className="hero-input"
             style={{textAlign:'center',}}
           />
+          <button className="hero-button">
+            Get started for free
+          </button>
+       
         </div>
       </div>
     </section>
