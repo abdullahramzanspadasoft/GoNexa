@@ -1,11 +1,5 @@
 import mongoose from "mongoose";
 
-const MONGO_URI = process.env.MONGO_URI;
-
-if (!MONGO_URI) {
-  throw new Error("Missing MONGO_URI in environment variables");
-}
-
 type MongooseCache = {
   conn: typeof mongoose | null;
   promise: Promise<typeof mongoose> | null;
@@ -23,6 +17,13 @@ const cached: MongooseCache = globalWithMongoose.mongoose || {
 globalWithMongoose.mongoose = cached;
 
 export default async function connectDB(): Promise<typeof mongoose> {
+  const MONGO_URI = process.env.MONGO_URI;
+  // IMPORTANT: do not throw at module import time.
+  // Some build environments evaluate server modules during build even if routes aren't invoked.
+  if (!MONGO_URI) {
+    throw new Error("Missing MONGO_URI in environment variables");
+  }
+
   if (cached.conn) {
     return cached.conn;
   }

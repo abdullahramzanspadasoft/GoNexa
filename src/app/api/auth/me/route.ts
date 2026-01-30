@@ -5,6 +5,13 @@ import User from "@/models/User";
 
 export async function GET(request: Request) {
   try {
+    if (!process.env.JWT_SECRET) {
+      return NextResponse.json(
+        { success: false, message: "JWT_SECRET not configured" },
+        { status: 500 }
+      );
+    }
+
     const authHeader = request.headers.get("authorization") || "";
     const token = authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : null;
 
@@ -16,6 +23,13 @@ export async function GET(request: Request) {
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { userId: string };
+
+    if (!process.env.MONGO_URI) {
+      return NextResponse.json(
+        { success: false, message: "MONGO_URI not configured" },
+        { status: 500 }
+      );
+    }
 
     await connectDB();
 
