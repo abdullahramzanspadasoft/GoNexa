@@ -1,8 +1,8 @@
 {
   "/_not-found/page": "/_not-found",
   "/api/auth/me/route": "/api/auth/me",
-  "/api/auth/signin/route": "/api/auth/signin",
   "/api/auth/signup/route": "/api/auth/signup",
+  "/api/auth/signin/route": "/api/auth/signin",
   "/hello/page": "/hello",
   "/login/page": "/login",
   "/page": "/"
