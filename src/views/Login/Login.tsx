@@ -1,26 +1,128 @@
+import { useState } from "react";
+import type { FormEvent, ChangeEvent } from "react";
 import { LoginNavbar } from "./LoginNavbar";
 import { LoginFooter } from "./LoginFooter";
+import { authAPI, saveToken } from "../../utils/api";
 
 export function Login() {
+  const [isSignup, setIsSignup] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+    setError("");
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      let response;
+      if (isSignup) {
+        // Signup
+        response = await authAPI.signup(formData);
+      } else {
+        // Signin
+        response = await authAPI.signin(formData.email, formData.password);
+      }
+
+      // Save token
+      saveToken(response.data.token);
+
+      // Redirect to hello page
+      window.location.hash = "#/hello";
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Something went wrong";
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="login-page">
       <LoginNavbar />
 
       <div className="login-content">
         <div className="login-card">
-          <h2>Create an account</h2>
+          <h2>{isSignup ? "Create an account" : "Login"}</h2>
           <p className="login-subtitle">
-            Already have an account?s <button type="button">Login</button>
+            {isSignup ? "Already have an account? " : "Don't have an account? "}
+            <button 
+              type="button" 
+              onClick={() => {
+                setIsSignup(!isSignup);
+                setError("");
+              }}
+            >
+              {isSignup ? "Login" : "Sign Up"}
+            </button>
           </p>
 
-          <div className="login-form">
-            <div className="login-row">
-              <input type="text" placeholder="First Name" />
-              <input type="text" placeholder="Last Name" />
+          {error && (
+            <div style={{
+              background: "rgba(255, 0, 0, 0.1)",
+              color: "#ff6b6b",
+              padding: "12px",
+              borderRadius: "8px",
+              marginBottom: "16px",
+              fontSize: "14px",
+              textAlign: "center"
+            }}>
+              {error}
             </div>
-            <input type="email" placeholder="Email" />
+          )}
+
+          <form className="login-form" onSubmit={handleSubmit}>
+            {isSignup && (
+              <div className="login-row">
+                <input
+                  type="text"
+                  name="firstName"
+                  placeholder="First Name"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder="Last Name"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            )}
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
             <div className="login-password">
-              <input type="password" placeholder="Enter your Password" />
+              <input
+                type="password"
+                name="password"
+                placeholder="Enter your Password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
               <span className="login-eye">
                 <svg fill="#fff" width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path d="M21.92,11.6C19.9,6.91,16.1,4,12,4S4.1,6.91,2.08,11.6a1,1,0,0,0,0,.8C4.1,17.09,7.9,20,12,20s7.9-2.91,9.92-7.6A1,1,0,0,0,21.92,11.6ZM12,18c-3.17,0-6.17-2.29-7.9-6C5.83,8.29,8.83,6,12,6s6.17,2.29,7.9,6C18.17,15.71,15.17,18,12,18ZM12,8a4,4,0,1,0,4,4A4,4,0,0,0,12,8Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,14Z"/>
@@ -28,17 +130,19 @@ export function Login() {
               </span>
             </div>
 
-            <label className="login-terms">
-              <input type="checkbox" />
-              <span>
-                I agree to the <a href="#">Terms &amp; Conditions</a>
-              </span>
-            </label>
+            {isSignup && (
+              <label className="login-terms">
+                <input type="checkbox" required />
+                <span>
+                  I agree to the <a href="#">Terms &amp; Conditions</a>
+                </span>
+              </label>
+            )}
 
-            <button type="button" className="login-primary">
-              Create account
+            <button type="submit" className="login-primary" disabled={loading}>
+              {loading ? "Processing..." : isSignup ? "Create account" : "Login"}
             </button>
-          </div>
+          </form>
 
           <div className="login-divider">
             <span>Or register with</span>
