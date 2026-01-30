@@ -3,12 +3,8 @@
   "config": {
     "env": {},
     "webpack": null,
-    "eslint": {
-      "ignoreDuringBuilds": false
-    },
     "typescript": {
-      "ignoreBuildErrors": false,
-      "tsconfigPath": "tsconfig.json"
+      "ignoreBuildErrors": false
     },
     "typedRoutes": false,
     "distDir": ".next",
@@ -38,7 +34,6 @@
         3840
       ],
       "imageSizes": [
-        16,
         32,
         48,
         64,
@@ -52,14 +47,26 @@
       "loaderFile": "",
       "domains": [],
       "disableStaticImages": false,
-      "minimumCacheTTL": 60,
+      "minimumCacheTTL": 14400,
       "formats": [
         "image/webp"
       ],
+      "maximumRedirects": 3,
+      "maximumResponseBody": 50000000,
+      "dangerouslyAllowLocalIP": false,
       "dangerouslyAllowSVG": false,
       "contentSecurityPolicy": "script-src 'none'; frame-src 'none'; sandbox;",
       "contentDispositionType": "attachment",
+      "localPatterns": [
+        {
+          "pathname": "**",
+          "search": ""
+        }
+      ],
       "remotePatterns": [],
+      "qualities": [
+        75
+      ],
       "unoptimized": false
     },
     "devIndicators": {
@@ -69,17 +76,12 @@
       "maxInactiveAge": 60000,
       "pagesBufferLength": 5
     },
-    "amp": {
-      "canonicalBase": ""
-    },
     "basePath": "",
     "sassOptions": {},
     "trailingSlash": false,
     "i18n": null,
     "productionBrowserSourceMaps": false,
     "excludeDefaultMomentLocales": true,
-    "serverRuntimeConfig": {},
-    "publicRuntimeConfig": {},
     "reactProductionProfiling": false,
     "reactStrictMode": true,
     "reactMaxHeadersLength": 6000,
@@ -100,62 +102,60 @@
       }
     },
     "outputFileTracingRoot": "/home/abdullah/Desktop/oract",
+    "cacheComponents": false,
+    "cacheLife": {
+      "default": {
+        "stale": 300,
+        "revalidate": 900,
+        "expire": 4294967294
+      },
+      "seconds": {
+        "stale": 30,
+        "revalidate": 1,
+        "expire": 60
+      },
+      "minutes": {
+        "stale": 300,
+        "revalidate": 60,
+        "expire": 3600
+      },
+      "hours": {
+        "stale": 300,
+        "revalidate": 3600,
+        "expire": 86400
+      },
+      "days": {
+        "stale": 300,
+        "revalidate": 86400,
+        "expire": 604800
+      },
+      "weeks": {
+        "stale": 300,
+        "revalidate": 604800,
+        "expire": 2592000
+      },
+      "max": {
+        "stale": 300,
+        "revalidate": 2592000,
+        "expire": 31536000
+      }
+    },
+    "cacheHandlers": {},
     "experimental": {
       "useSkewCookie": false,
-      "cacheLife": {
-        "default": {
-          "stale": 300,
-          "revalidate": 900,
-          "expire": 4294967294
-        },
-        "seconds": {
-          "stale": 30,
-          "revalidate": 1,
-          "expire": 60
-        },
-        "minutes": {
-          "stale": 300,
-          "revalidate": 60,
-          "expire": 3600
-        },
-        "hours": {
-          "stale": 300,
-          "revalidate": 3600,
-          "expire": 86400
-        },
-        "days": {
-          "stale": 300,
-          "revalidate": 86400,
-          "expire": 604800
-        },
-        "weeks": {
-          "stale": 300,
-          "revalidate": 604800,
-          "expire": 2592000
-        },
-        "max": {
-          "stale": 300,
-          "revalidate": 2592000,
-          "expire": 4294967294
-        }
-      },
-      "cacheHandlers": {},
       "cssChunking": true,
       "multiZoneDraftMode": false,
       "appNavFailHandling": false,
       "prerenderEarlyExit": true,
       "serverMinification": true,
-      "serverSourceMaps": false,
       "linkNoTouchStart": false,
       "caseSensitiveRoutes": false,
-      "clientSegmentCache": false,
-      "clientParamParsing": false,
       "dynamicOnHover": false,
       "preloadEntriesOnStart": true,
       "clientRouterFilter": true,
       "clientRouterFilterRedirects": false,
       "fetchCacheKeyPrefix": "",
-      "middlewarePrefetch": "flexible",
+      "proxyPrefetch": "flexible",
       "optimisticClientCache": true,
       "manualClientBasePath": false,
       "cpus": 7,
@@ -187,24 +187,29 @@
       "webpackMemoryOptimizations": false,
       "optimizeServerReact": true,
       "viewTransition": false,
-      "routerBFCache": false,
       "removeUncaughtErrorAndRejectionListeners": false,
       "validateRSCRequestHeaders": false,
       "staleTimes": {
         "dynamic": 0,
         "static": 300
       },
+      "reactDebugChannel": false,
       "serverComponentsHmrCache": true,
       "staticGenerationMaxConcurrency": 8,
       "staticGenerationMinPagesPerWorker": 25,
-      "cacheComponents": false,
+      "transitionIndicator": false,
       "inlineCss": false,
       "useCache": false,
       "globalNotFound": false,
-      "devtoolSegmentExplorer": true,
       "browserDebugInfoInTerminal": false,
-      "optimizeRouterScrolling": false,
-      "middlewareClientMaxBodySize": 10485760,
+      "lockDistDir": true,
+      "isolatedDevBuild": true,
+      "proxyClientMaxBodySize": 10485760,
+      "hideLogsAfterAbort": false,
+      "mcpServer": true,
+      "turbopackFileSystemCacheForDev": true,
+      "turbopackFileSystemCacheForBuild": false,
+      "turbopackInferModuleSideEffects": false,
       "optimizePackageImports": [
         "lucide-react",
         "date-fns",
@@ -290,7 +295,8 @@
     "configFileName": "next.config.mjs",
     "turbopack": {
       "root": "/home/abdullah/Desktop/oract"
-    }
+    },
+    "distDirRoot": ".next"
   },
   "appDir": "/home/abdullah/Desktop/oract",
   "relativeAppDir": "",
@@ -302,11 +308,8 @@
     ".next/server/functions-config-manifest.json",
     ".next/server/middleware-manifest.json",
     ".next/server/middleware-build-manifest.js",
-    ".next/server/middleware-react-loadable-manifest.js",
-    ".next/react-loadable-manifest.json",
     ".next/server/app-paths-manifest.json",
     ".next/app-path-routes-manifest.json",
-    ".next/app-build-manifest.json",
     ".next/server/server-reference-manifest.js",
     ".next/server/server-reference-manifest.json",
     ".next/BUILD_ID",
@@ -314,7 +317,5 @@
     ".next/server/next-font-manifest.json",
     ".next/required-server-files.json"
   ],
-  "ignore": [
-    "node_modules/next/dist/compiled/@ampproject/toolbox-optimizer/**/*"
-  ]
+  "ignore": []
 }
