@@ -73,7 +73,7 @@ const signin = async (email, password) => {
   };
 };
 
-// Get user by ID
+// Get user by IDsssss
 const getUserById = async (userId) => {
   const user = await User.findById(userId).select("-password");
   if (!user) {
