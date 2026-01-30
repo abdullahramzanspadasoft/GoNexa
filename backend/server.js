@@ -12,8 +12,15 @@ connectDB();
 const app = express();
 
 // CORS Configuration
+const frontendOrigins = (process.env.FRONTEND_URLS || "")
+  .split(",")
+  .map((url) => url.trim())
+  .filter(Boolean);
+
 const corsOptions = {
-  origin: ["http://localhost:3000", "http://127.0.0.1:3000"],
+  origin: frontendOrigins.length
+    ? frontendOrigins
+    : ["http://localhost:3000", "http://127.0.0.1:3000"],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],

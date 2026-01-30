@@ -1,7 +1,11 @@
+"use client";
+
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { authAPI, getToken, removeToken, type User } from "../../utils/api";
 
 export function Hello() {
+  const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -10,27 +14,27 @@ export function Hello() {
       const token = getToken();
       
       if (!token) {
-        window.location.hash = "#/login";
+        router.push("/login");
         return;
       }
 
       try {
         const response = await authAPI.getCurrentUser(token);
         setUser(response.data);
-      } catch (error) {
+      } catch {
         removeToken();
-        window.location.hash = "#/login";
+        router.push("/login");
       } finally {
         setLoading(false);
       }
     };
 
     fetchUser();
-  }, []);
+  }, [router]);
 
   const handleSignOut = () => {
     removeToken();
-    window.location.hash = "#/login";
+    router.push("/login");
   };
 
   if (loading) {

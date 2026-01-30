@@ -1,5 +1,3 @@
-import logo from "../../../public/Asset 2-8.png";
-
 const socialLinks = [
   { label: "Instagram", href: "https://instagram.com", icon: "instagram" },
   { label: "Facebook", href: "https://facebook.com", icon: "facebook" },
@@ -64,7 +62,7 @@ export function LoginFooter() {
     <footer className="login-footer">
       <div className="footer-content">
         <div className="footer-brand">
-          <img src={logo} style={{width:"145px"}} alt="GoNexa Logo" />   
+          <img src="/Asset 2-8.png" style={{width:"145px"}} alt="GoNexa Logo" />   
           <p style={{
             position:"relative",
             top:"33px",

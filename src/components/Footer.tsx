@@ -1,5 +1,4 @@
 // import type { ReactNode } from "react";
-import logo from ".././../public/Asset 2-8.png";
 
 const socialLinks = [
   { label: "Instagram", href: "https://instagram.com", icon: "instagram" },
@@ -96,7 +95,7 @@ export function Footer() {
     <footer className="footer">
       <div className="footer-content">
         <div className="footer-brand">
-        <img src={logo}
+        <img src="/Asset 2-8.png"
           style={{width:"145px"}}
           alt="GoNexa Logo" />   
           <p style={{

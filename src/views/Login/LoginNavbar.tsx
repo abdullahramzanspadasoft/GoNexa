@@ -1,10 +1,12 @@
-import logo from "../../../public/Asset 2-8.png";
+import Link from "next/link";
 
 export function LoginNavbar() {
   return (
     <div className="login-navbar-wrapper">
       <div className="login-navbar">
-        <img src={logo} alt="GoNexa Logo" className="login-navbar-logo" />
+        <Link href="/">
+          <img src="/Asset 2-8.png" alt="GoNexa Logo" className="login-navbar-logo" />
+        </Link>
       </div>
     </div>
   );

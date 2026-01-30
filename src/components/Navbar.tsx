@@ -1,6 +1,8 @@
+"use client";
+
 import { useState } from "react";
+import Link from "next/link";
 // import { Logo } from "../icons/Logo";
-import logo from ".././../public/Asset 2-8.png";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,9 +13,12 @@ export function Navbar() {
         <h1 className="navbar-logo">
           {/* <Logo /> */}
 
-          <img src={logo}
-          style={{width:"145px"}}
-          alt="GoNexa Logo" />        </h1>
+          <img
+            src="/Asset 2-8.png"
+            style={{ width: "145px" }}
+            alt="GoNexa Logo"
+          />
+        </h1>
 
         <div className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
           <a href="#">Products</a>
@@ -23,16 +28,13 @@ export function Navbar() {
           <a href="">Affiliate</a>
         </div>
 
-        <button
+        <Link
           className="navbar-button"
-          type="button"
-          onClick={() => {
-            window.location.hash = "#/login";
-            setIsMenuOpen(false);
-          }}
+          href="/login"
+          onClick={() => setIsMenuOpen(false)}
         >
           Login
-        </button>
+        </Link>
 
         <button className="navbar-menu-icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           <span></span>

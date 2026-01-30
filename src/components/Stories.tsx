@@ -1,6 +1,7 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import data from "../data.json";
-import king from '../../public/king.png';
 
 export function Stories() {
   const [showAll, setShowAll] = useState(false);
@@ -91,7 +92,7 @@ export function Stories() {
                 flexDirection: 'column',
                 justifyContent: 'flex-end',
                 padding: '30px',
-                backgroundImage: `url(${king})`, 
+                backgroundImage: "url(/king.png)",
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }}

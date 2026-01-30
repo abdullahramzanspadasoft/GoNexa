@@ -1,10 +1,14 @@
+"use client";
+
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import type { FormEvent, ChangeEvent } from "react";
 import { LoginNavbar } from "./LoginNavbar";
 import { LoginFooter } from "./LoginFooter";
 import { authAPI, saveToken } from "../../utils/api";
 
 export function Login() {
+  const router = useRouter();
   const [isSignup, setIsSignup] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -42,7 +46,7 @@ export function Login() {
       saveToken(response.data.token);
 
       // Redirect to hello page
-      window.location.hash = "#/hello";
+      router.push("/hello");
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Something went wrong";
       setError(errorMessage);
