@@ -1,53 +1,12 @@
 import data from "../data.json";
 
 const productIcons = [
-  (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" strokeWidth="2" />
-      <path d="M8 2v4M16 2v4M3 9h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  ),
-  (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="3" y="4" width="18" height="17" rx="2" stroke="currentColor" strokeWidth="2" />
-      <path d="M8 2v4M16 2v4M3 9h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M8 13h2M12 13h2M16 13h2M8 17h2M12 17h2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  ),
-  (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M4 20h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M7 17V10M12 17V7M17 17v-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  ),
-  (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M7 17h-2a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v1"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <path d="M11 12h8a3 3 0 0 1 3 3v5l-3-2h-8a3 3 0 0 1-3-3v-1a3 3 0 0 1 3-3z" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  ),
-  (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z" stroke="currentColor" strokeWidth="2" />
-      <path d="m4 8 8 6 8-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  ),
-  (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M20 12a8 8 0 0 1-12.3 6.7L4 20l1.3-3.7A8 8 0 1 1 20 12z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <path d="M9.5 9.5h.01M14.5 9.5h.01M9 14h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  ),
+  "/Social%20Media%20Management%20Icon.svg",
+  "/Social%20Media%20Scheduling%20Icon.svg",
+  "/Social%20Analytics%20Icon%20(1).svg",
+  "/Social%20Inbox%20Icon.svg",
+  "/Email%20Marketing%20Icon%20(1).svg",
+  "/Whatsapp%20Automation%20Icon.svg",
 ];
 
 export function Products() {
@@ -161,7 +120,13 @@ export function Products() {
                   flexShrink: 0,
                 }}
               >
-                {productIcons[i % productIcons.length]}
+                <img
+                  src={productIcons[i % productIcons.length]}
+                  alt=""
+                  width={22}
+                  height={22}
+                  aria-hidden="true"
+                />
               </div>
 
               <h3
@@ -198,7 +163,7 @@ export function Products() {
         </div>
 
         <div className="products-button-container" style={{ textAlign: "center", marginTop: "48px" }}>
-          <button   style={{
+          <button className="cta-hover" style={{
     padding: "16px 70px",
     background: "linear-gradient(90deg, #5865f2 0%, #a855f7 100%)",
     color: "white",

@@ -1,4 +1,14 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+
 export function Hero() {
+  const router = useRouter();
+
+  const handleGetStarted = () => {
+    router.push("/login?mode=signup");
+  };
+
   return (
     <section className="hero-section">
       <style>{`
@@ -15,6 +25,7 @@ export function Hero() {
             margin-bottom: 16px !important;
             width: 100% !important;
             margin-left: 0 !important;
+            text-align: center !important;
           }
           .hero-description {
             font-size: 14px !important;
@@ -65,7 +76,7 @@ export function Hero() {
             className="hero-input"
             style={{textAlign:'center',}}
           />
-          <button className="hero-button">
+          <button className="hero-button" onClick={handleGetStarted}>
             Get started for free
           </button>
        

@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { signIn } from "next-auth/react";
 import type { FormEvent, ChangeEvent } from "react";
 import { LoginNavbar } from "./LoginNavbar";
 import { LoginFooter } from "./LoginFooter";
@@ -9,7 +10,9 @@ import { authAPI, saveToken } from "../../utils/api";
 
 export function Login() {
   const router = useRouter();
-  const [isSignup, setIsSignup] = useState(true);
+  const searchParams = useSearchParams();
+  const mode = searchParams?.get("mode");
+  const [isSignup, setIsSignup] = useState(mode === "login" ? false : true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
@@ -35,14 +38,11 @@ export function Login() {
     try {
       let response;
       if (isSignup) {
-        // Signup
         response = await authAPI.signup(formData);
       } else {
-        // Signin
         response = await authAPI.signin(formData.email, formData.password);
       }
 
-      // Save token
       saveToken(response.data.token);
 
       // Redirect to hello page
@@ -61,7 +61,7 @@ export function Login() {
 
       <div className="login-content">
         <div className="login-card">
-          <h2>{isSignup ? "Create an account" : "Login"}</h2>
+          <h2>{isSignup ? "Create an account" : "Sign in to your account"}</h2>
           <p className="login-subtitle">
             {isSignup ? "Already have an account? " : "Don't have an account? "}
             <button 
@@ -71,7 +71,7 @@ export function Login() {
                 setError("");
               }}
             >
-              {isSignup ? "Login" : "Sign Up"}
+              {isSignup ? "Login" : "Sign up"}
             </button>
           </p>
 
@@ -134,6 +134,26 @@ export function Login() {
               </span>
             </div>
 
+            {!isSignup && (
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "6px", marginBottom: "6px" }}>
+                <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px", color: "rgba(255, 255, 255, 0.9)", cursor: "pointer" }}>
+                  <input
+                    type="checkbox"
+                    style={{
+                      width: "15px",
+                      height: "15px",
+                      borderRadius: "3px",
+                      cursor: "pointer",
+                    }}
+                  />
+                  <span>Remember me</span>
+                </label>
+                <a href="#" style={{ fontSize: "14px", color: "#ffffff", textDecoration: "none" }}>
+                  Forgot password?
+                </a>
+              </div>
+            )}
+
             {isSignup && (
               <label className="login-terms">
                 <input type="checkbox" required />
@@ -144,7 +164,7 @@ export function Login() {
             )}
 
             <button type="submit" className="login-primary" disabled={loading}>
-              {loading ? "Processing..." : isSignup ? "Create account" : "Login"}
+              {loading ? "Processing..." : isSignup ? "Create account" : "Log in"}
             </button>
           </form>
 
@@ -153,14 +173,30 @@ export function Login() {
           </div>
 
           <div className="login-social">
-            <button type="button" className="login-social-btn">
+            <button
+              type="button"
+              className="login-social-btn"
+              onClick={async () => {
+                try {
+                  setError("");
+                  await signIn("google", {
+                    callbackUrl: "/hello",
+                    redirect: true,
+                    prompt: "select_account",
+                  });
+                } catch (err) {
+                  const errorMessage = err instanceof Error ? err.message : "Google sign-in failed";
+                  setError(errorMessage);
+                }
+              }}
+            >
               <svg width="26" height="27" viewBox="0 0 26 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fillRule="evenodd" clipRule="evenodd" d="M5.33039 13.0101C5.33039 12.165 5.47076 11.3547 5.72129 10.5947L1.33615 7.24609C0.481512 8.98134 0 10.9366 0 13.0101C0 15.0819 0.48092 17.036 1.33437 18.77L5.71714 15.4149C5.46898 14.6584 5.33039 13.8511 5.33039 13.0101Z" fill="#FBBC05"/>
                 <path fillRule="evenodd" clipRule="evenodd" d="M13.0294 5.32283C14.8654 5.32283 16.5238 5.9734 17.8267 7.03796L21.6172 3.25284C19.3074 1.24199 16.3461 0 13.0294 0C7.88023 0 3.45482 2.94471 1.33569 7.24733L5.72083 10.596C6.73123 7.52885 9.61142 5.32283 13.0294 5.32283Z" fill="#EB4335"/>
                 <path fillRule="evenodd" clipRule="evenodd" d="M13.0296 20.6989C9.61167 20.6989 6.73148 18.4929 5.72107 15.4258L1.33594 18.7738C3.45506 23.0771 7.88047 26.0218 13.0296 26.0218C16.2077 26.0218 19.2419 24.8933 21.5192 22.779L17.3567 19.561C16.1823 20.3009 14.7034 20.6989 13.0296 20.6989Z" fill="#34A853"/>
                 <path fillRule="evenodd" clipRule="evenodd" d="M25.4688 13.0102C25.4688 12.2414 25.3504 11.4134 25.1727 10.6445H13.0312V15.6716H20.02C19.6705 17.3856 18.7194 18.7033 17.3583 19.5609L21.5208 22.7788C23.9129 20.5586 25.4688 17.2513 25.4688 13.0102Z" fill="#4285F4"/>
               </svg>
-              Google
+              Continue with Google
             </button>
             <button type="button" className="login-social-btn">
               <svg width="23" height="28" viewBox="0 0 23 28" fill="none" xmlns="http://www.w3.org/2000/svg">

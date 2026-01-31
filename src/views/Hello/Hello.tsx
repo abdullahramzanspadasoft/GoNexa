@@ -3,24 +3,30 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { authAPI, getToken, removeToken, type User } from "../../utils/api";
+import { signOut, useSession } from "next-auth/react";
 
 export function Hello() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const { status } = useSession();
 
   useEffect(() => {
     const fetchUser = async () => {
       const token = getToken();
       
-      if (!token) {
-        router.push("/login");
-        return;
-      }
-
       try {
-        const response = await authAPI.getCurrentUser(token);
-        setUser(response.data);
+        if (token) {
+          const response = await authAPI.getCurrentUser(token);
+          setUser(response.data);
+          return;
+        }
+
+        // NextAuth (Google) login path: fetch user from DB using session cookie
+        const res = await fetch("/api/user/me");
+        if (!res.ok) throw new Error("Unauthorized");
+        const data = await res.json();
+        setUser(data.data);
       } catch {
         removeToken();
         router.push("/login");
@@ -29,12 +35,16 @@ export function Hello() {
       }
     };
 
-    fetchUser();
-  }, [router]);
+    // Wait for NextAuth session resolution when no token
+    if (getToken() || status !== "loading") {
+      fetchUser();
+    }
+  }, [router, status]);
 
   const handleSignOut = () => {
     removeToken();
-    router.push("/login");
+    // Also sign out from NextAuth (Google)
+    signOut({ callbackUrl: "/login" });
   };
 
   if (loading) {

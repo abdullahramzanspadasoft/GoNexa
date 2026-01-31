@@ -21,16 +21,29 @@ export function Navbar() {
         </h1>
 
         <div className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
-          <a href="#">Products</a>
-          <a href="#">Pricing</a>
-          <a href="#">Blogs</a>
-          <a href="#">About us</a>
-          <a href="">Affiliate</a>
+          <Link
+            className="navbar-mobile-login-button"
+            href="/login?mode=login"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Login
+          </Link>
+          <button
+            className="navbar-mobile-products-button"
+            onClick={() => setIsMenuOpen(false)}
+            type="button"
+          >
+            Products
+          </button>
+          <a href="#" onClick={() => setIsMenuOpen(false)}>Pricing</a>
+          <a href="#" onClick={() => setIsMenuOpen(false)}>Affiliate</a>
+          <a href="#" onClick={() => setIsMenuOpen(false)}>Blogs</a>
+          <a href="#" onClick={() => setIsMenuOpen(false)}>About us</a>
         </div>
 
         <Link
           className="navbar-button"
-          href="/login"
+          href="/login?mode=login"
           onClick={() => setIsMenuOpen(false)}
         >
           Login

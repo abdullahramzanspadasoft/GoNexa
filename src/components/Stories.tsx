@@ -80,7 +80,16 @@ export function Stories() {
         </div>
 
         <div className="stories-grid-adaptive">
-          {displayedStories.map((story, i) => (
+          {displayedStories.map((story, i) => {
+            const blogImages = [
+              "/GoNexa_Blog (1).jpg.jpeg",
+              "/GoNexa_Blog (2).jpg.jpeg",
+              "/GoNexa_Blog (3).jpg.jpeg",
+              "/GoNexa_Blog (4).jpg.jpeg",
+              "/GoNexa_Blog (5).jpg.jpeg",
+            ];
+            const imagePath = encodeURI(blogImages[i % blogImages.length]);
+            return (
             <div
               key={i}
               className={`story-card-adaptive story-card-${i}`}
@@ -92,7 +101,7 @@ export function Stories() {
                 flexDirection: 'column',
                 justifyContent: 'flex-end',
                 padding: '30px',
-                backgroundImage: "url(/king.png)",
+                backgroundImage: `url("${imagePath}")`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }}
@@ -141,7 +150,8 @@ export function Stories() {
                 </button>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
 
         <button 

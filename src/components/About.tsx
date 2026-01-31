@@ -53,6 +53,8 @@ export function About() {
             line-height: 1.6 !important;
             margin-bottom: 24px !important;
             color: #666 !important;
+            text-align: justify !important;
+            text-justify: inter-word;
           }
 
           .about-button {

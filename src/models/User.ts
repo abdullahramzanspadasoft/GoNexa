@@ -9,8 +9,9 @@ const userSchema = new Schema(
     },
     lastName: {
       type: String,
-      required: [true, "Last name is required"],
+      required: false,
       trim: true,
+      default: "",
     },
     email: {
       type: String,
@@ -21,8 +22,11 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
+      required: function requiredPassword(this: { googleId?: string | null }) {
+        return !this.googleId;
+      },
       minlength: 6,
+      default: null,
     },
     googleId: {
       type: String,
