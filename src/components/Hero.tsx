@@ -38,6 +38,7 @@ export function Hero() {
             gap: 16px !important;
             width: 100%;
           }
+            // xnsdksdskdsbdfds
           .hero-button {
             width: 100% !important;
             max-width: 320px;
