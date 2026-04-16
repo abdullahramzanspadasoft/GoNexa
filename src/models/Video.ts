@@ -1,16 +1,37 @@
-import mongoose, { Schema, models } from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose";
 
-const videoSchema = new Schema(
+export interface IVideo extends Document {
+  youtubeVideoId: string;
+  userId: mongoose.Types.ObjectId;
+  title: string;
+  description?: string;
+  privacyStatus: "private" | "unlisted" | "public";
+  publishAt?: Date;
+  status: "uploaded" | "scheduled" | "published";
+  thumbnailUrl?: string;
+  videoUrl: string;
+  duration?: string;
+  viewCount?: number;
+  likeCount?: number;
+  channelId: string;
+  channelName?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const VideoSchema: Schema = new Schema(
   {
-    userId: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
     youtubeVideoId: {
       type: String,
       required: true,
       unique: true,
+      index: true,
+    },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      index: true,
     },
     title: {
       type: String,
@@ -27,23 +48,21 @@ const videoSchema = new Schema(
     },
     publishAt: {
       type: Date,
-      default: null,
     },
-    uploadedAt: {
-      type: Date,
-      default: Date.now,
+    status: {
+      type: String,
+      enum: ["uploaded", "scheduled", "published"],
+      default: "uploaded",
     },
     thumbnailUrl: {
       type: String,
-      default: null,
     },
     videoUrl: {
       type: String,
-      default: null,
+      required: true,
     },
     duration: {
       type: String,
-      default: null,
     },
     viewCount: {
       type: Number,
@@ -53,15 +72,24 @@ const videoSchema = new Schema(
       type: Number,
       default: 0,
     },
-    status: {
+    channelId: {
       type: String,
-      enum: ["uploading", "processing", "published", "failed", "scheduled"],
-      default: "uploading",
+      required: true,
+      index: true,
+    },
+    channelName: {
+      type: String,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
-const Video = models.Video || mongoose.model("Video", videoSchema);
+// Compound index for efficient queries
+VideoSchema.index({ userId: 1, youtubeVideoId: 1 });
+VideoSchema.index({ channelId: 1, createdAt: -1 });
+
+const Video: Model<IVideo> = mongoose.models.Video || mongoose.model<IVideo>("Video", VideoSchema);
 
 export default Video;

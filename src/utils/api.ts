@@ -18,6 +18,26 @@ interface User {
   lastName: string;
   email: string;
   profileImage?: string | null;
+  youtubeChannelId?: string | null;
+  youtubeChannelName?: string | null;
+  youtubeChannelLogo?: string | null;
+  youtubeChannelSubscribers?: number | null;
+  linkedinId?: string | null;
+  linkedinName?: string | null;
+  linkedinLogo?: string | null;
+  linkedinConnected?: boolean;
+   instagramId?: string | null;
+   instagramName?: string | null;
+   instagramLogo?: string | null;
+   instagramConnected?: boolean;
+  facebookId?: string | null;
+  facebookName?: string | null;
+  facebookLogo?: string | null;
+  facebookConnected?: boolean;
+  tiktokId?: string | null;
+  tiktokName?: string | null;
+  tiktokLogo?: string | null;
+  tiktokConnected?: boolean;
   createdAt?: string;
 }
 
@@ -69,7 +89,7 @@ export const authAPI = {
   },
 
   signin: async (email: string, password: string): Promise<ApiResponse<AuthResponse>> => {
-    return apiCall<AuthResponse>("/auth/signin", {
+    return apiCall<AuthResponse>("/auth/login", {
       method: "POST",
       body: { email, password },
     });

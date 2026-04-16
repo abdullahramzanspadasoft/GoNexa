@@ -4,6 +4,11 @@ import jwt from "jsonwebtoken";
 import connectDB from "@/lib/mongodb";
 import User from "@/models/User";
 
+// Dummy auth credentials
+const DUMMY_EMAIL = "test@gmail.com";
+const DUMMY_PASSWORD = "testemail";
+const DUMMY_USER_ID = "dummy_user_12345";
+
 export async function POST(request: Request) {
   try {
     const { email, password } = await request.json();
@@ -13,6 +18,31 @@ export async function POST(request: Request) {
         { success: false, message: "Email and password are required" },
         { status: 400 }
       );
+    }
+
+    // Dummy auth check
+    if (email.toLowerCase() === DUMMY_EMAIL && password === DUMMY_PASSWORD) {
+      const token = jwt.sign(
+        { userId: DUMMY_USER_ID },
+        process.env.JWT_SECRET as string,
+        { expiresIn: "7d" }
+      );
+
+      return NextResponse.json({
+        success: true,
+        message: "Login successful",
+        data: {
+          user: {
+            id: DUMMY_USER_ID,
+            firstName: "Test",
+            lastName: "User",
+            email: DUMMY_EMAIL,
+            profileImage: null,
+            createdAt: new Date().toISOString(),
+          },
+          token,
+        },
+      });
     }
 
     await connectDB();

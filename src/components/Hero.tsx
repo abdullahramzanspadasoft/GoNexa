@@ -38,7 +38,7 @@ export function Hero() {
             gap: 16px !important;
             width: 100%;
           }
-            // xnsdksdskdsbdfds
+    
           .hero-button {
             width: 100% !important;
             max-width: 320px;
@@ -55,7 +55,7 @@ export function Hero() {
       `}</style>
       <div className="glow-bg-1" />
       <div className="glow-bg-2" />
-
+{/* cxcsncxnc */}
       <div className="hero-content">
         <h2 className="hero-title">
           The All-in-One solution for

@@ -29,7 +29,7 @@ export function Hello() {
         setUser(data.data);
       } catch {
         removeToken();
-        router.push("/login");
+        router.push("/dashboard");
       } finally {
         setLoading(false);
       }
@@ -44,7 +44,7 @@ export function Hello() {
   const handleSignOut = () => {
     removeToken();
     // Also sign out from NextAuth (Google)
-    signOut({ callbackUrl: "/login" });
+    signOut({ callbackUrl: "/dashboard" });
   };
 
   if (loading) {

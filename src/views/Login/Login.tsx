@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import type { FormEvent, ChangeEvent } from "react";
 import { LoginNavbar } from "./LoginNavbar";
@@ -9,18 +9,124 @@ import { LoginFooter } from "./LoginFooter";
 import { authAPI, saveToken } from "../../utils/api";
 
 export function Login() {
-  const router = useRouter();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const mode = searchParams?.get("mode");
   const [isSignup, setIsSignup] = useState(mode === "login" ? false : true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showAlternatives, setShowAlternatives] = useState(false);
+  const [googleError, setGoogleError] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
   });
+
+  // Check for OAuth errors in URL parameters
+  useEffect(() => {
+    const errorParam = searchParams?.get("error");
+    if (errorParam) {
+      let errorMessage = "Authentication failed. Please try again.";
+      let isGoogleError = false;
+      
+      // Map common OAuth errors to user-friendly messages
+      switch (errorParam) {
+        case "Configuration":
+          errorMessage = "Google OAuth is not properly configured. Please check your environment variables.";
+          isGoogleError = true;
+          break;
+        case "AccessDenied":
+          errorMessage = "Access denied. You may need to grant permissions to the application.";
+          break;
+        case "Verification":
+          errorMessage = "Verification failed. Please try again.";
+          break;
+        case "OAuthSignin":
+          errorMessage = "Google sign-in is currently unavailable. Use email and password instead.";
+          isGoogleError = true;
+          break;
+        case "OAuthCallback":
+          errorMessage = "Google sign-in is currently unavailable. Use email and password instead.";
+          isGoogleError = true;
+          break;
+        case "OAuthCreateAccount":
+          errorMessage = "Could not create account. Please try again.";
+          break;
+        case "EmailCreateAccount":
+          errorMessage = "Could not create account with this email.";
+          break;
+        case "Callback":
+          errorMessage = "Authentication callback error. Please try again.";
+          break;
+        case "OAuthAccountNotLinked":
+          errorMessage = "An account with this email already exists. Please sign in with your password.";
+          isGoogleError = true;
+          break;
+        case "EmailSignin":
+          errorMessage = "Email sign-in error. Please check your credentials.";
+          break;
+        case "CredentialsSignin":
+          errorMessage = "Invalid credentials. Please check your email and password.";
+          break;
+        case "SessionRequired":
+          errorMessage = "Please sign in to access this page.";
+          break;
+        default:
+          if (errorParam.includes("disabled_client") || errorParam.includes("401")) {
+            errorMessage = "Google sign-in is currently unavailable. Use email and password instead.";
+            isGoogleError = true;
+          } else {
+            errorMessage = `Authentication error: ${errorParam}`;
+          }
+      }
+      
+      setError(errorMessage);
+      setGoogleError(isGoogleError);
+      
+      // Automatically show alternatives for Google errors (one-click solution)
+      if (isGoogleError) {
+        setShowAlternatives(true);
+      }
+      
+      // Clean up the error parameter from URL
+      const newSearchParams = new URLSearchParams(searchParams?.toString());
+      newSearchParams.delete("error");
+      const newUrl = newSearchParams.toString() 
+        ? `${window.location.pathname}?${newSearchParams.toString()}`
+        : window.location.pathname;
+      router.replace(newUrl);
+    }
+  }, [searchParams, router]);
+
+  const handleGoogleSignIn = async () => {
+    try {
+      setError("");
+      setGoogleError(false);
+      setShowAlternatives(false);
+      setLoading(true);
+      // NextAuth will redirect to Google OAuth, then back to our callback
+      // Errors will be caught by the useEffect hook that checks URL parameters
+      await signIn("google", {
+        callbackUrl: "/dashboard?tab=Accounts",
+        redirect: true,
+      });
+      // Note: This will redirect, so code after this won't execute on success
+      // Errors are handled via URL parameters in the useEffect hook above
+    } catch (err) {
+      const errorMessage = "Google sign-in is currently unavailable. Use email and password instead.";
+      setError(errorMessage);
+      setGoogleError(true);
+      setShowAlternatives(true);
+      setLoading(false);
+    }
+  };
+
+  const handleShowAlternatives = () => {
+    setShowAlternatives(true);
+    setError("");
+  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -45,8 +151,8 @@ export function Login() {
 
       saveToken(response.data.token);
 
-      // Redirect to hello page
-      router.push("/hello");
+      // Redirect to dashboard
+      router.push("/dashboard");
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Something went wrong";
       setError(errorMessage);
@@ -83,9 +189,37 @@ export function Login() {
               borderRadius: "8px",
               marginBottom: "16px",
               fontSize: "14px",
-              textAlign: "center"
+              textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              gap: "8px"
             }}>
-              {error}
+              <span>{error}</span>
+              {googleError && !showAlternatives && (
+                <button
+                  type="button"
+                  onClick={handleShowAlternatives}
+                  style={{
+                    background: "rgba(255, 255, 255, 0.1)",
+                    border: "1px solid rgba(255, 255, 255, 0.2)",
+                    color: "#fff",
+                    padding: "8px 16px",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                    fontSize: "13px",
+                    marginTop: "4px",
+                    transition: "all 0.2s"
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.2)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.1)";
+                  }}
+                >
+                  Use Email & Password Instead
+                </button>
+              )}
             </div>
           )}
 
@@ -168,6 +302,8 @@ export function Login() {
             </button>
           </form>
 
+          {!showAlternatives && (
+            <>
           <div className="login-divider">
             <span>Or register with</span>
           </div>
@@ -176,19 +312,8 @@ export function Login() {
             <button
               type="button"
               className="login-social-btn"
-              onClick={async () => {
-                try {
-                  setError("");
-                  await signIn("google", {
-                    callbackUrl: "/hello",
-                    redirect: true,
-                    prompt: "select_account",
-                  });
-                } catch (err) {
-                  const errorMessage = err instanceof Error ? err.message : "Google sign-in failed";
-                  setError(errorMessage);
-                }
-              }}
+              onClick={() => void handleGoogleSignIn()}
+              disabled={loading}
             >
               <svg width="26" height="27" viewBox="0 0 26 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fillRule="evenodd" clipRule="evenodd" d="M5.33039 13.0101C5.33039 12.165 5.47076 11.3547 5.72129 10.5947L1.33615 7.24609C0.481512 8.98134 0 10.9366 0 13.0101C0 15.0819 0.48092 17.036 1.33437 18.77L5.71714 15.4149C5.46898 14.6584 5.33039 13.8511 5.33039 13.0101Z" fill="#FBBC05"/>
@@ -205,6 +330,48 @@ export function Login() {
               Apple
             </button>
           </div>
+            </>
+          )}
+
+          {showAlternatives && (
+            <div style={{
+              marginTop: "20px",
+              padding: "16px",
+              background: "rgba(255, 255, 255, 0.05)",
+              borderRadius: "8px",
+              textAlign: "center"
+            }}>
+              <p style={{ marginBottom: "12px", fontSize: "14px", color: "rgba(255, 255, 255, 0.8)" }}>
+                Prefer to use email and password? Fill out the form above.
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowAlternatives(false);
+                  setError("");
+                  setGoogleError(false);
+                }}
+                style={{
+                  background: "transparent",
+                  border: "1px solid rgba(255, 255, 255, 0.3)",
+                  color: "#fff",
+                  padding: "8px 16px",
+                  borderRadius: "6px",
+                  cursor: "pointer",
+                  fontSize: "13px",
+                  transition: "all 0.2s"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "rgba(255, 255, 255, 0.1)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "transparent";
+                }}
+              >
+                Try Google Sign-in Again
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

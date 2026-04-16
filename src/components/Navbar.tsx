@@ -28,13 +28,7 @@ export function Navbar() {
           >
             Login
           </Link>
-          <button
-            className="navbar-mobile-products-button"
-            onClick={() => setIsMenuOpen(false)}
-            type="button"
-          >
-            Products
-          </button>
+          <a href="#" onClick={() => setIsMenuOpen(false)}>Products</a>
           <a href="#" onClick={() => setIsMenuOpen(false)}>Pricing</a>
           <a href="#" onClick={() => setIsMenuOpen(false)}>Affiliate</a>
           <a href="#" onClick={() => setIsMenuOpen(false)}>Blogs</a>
