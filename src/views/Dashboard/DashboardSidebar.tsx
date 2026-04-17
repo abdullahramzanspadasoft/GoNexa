@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 interface SidebarItem {
   icon: string;
   label: string;
@@ -10,10 +8,17 @@ interface SidebarItem {
 
 interface DashboardSidebarProps {
   activeItem: string;
+  isMobileOpen?: boolean;
+  onClose?: () => void;
   onItemClick: (item: string) => void;
 }
 
-export function DashboardSidebar({ activeItem, onItemClick }: DashboardSidebarProps) {
+export function DashboardSidebar({
+  activeItem,
+  isMobileOpen = false,
+  onClose,
+  onItemClick,
+}: DashboardSidebarProps) {
 
   const sidebarItems: SidebarItem[] = [
     { icon: "home", label: "Dashboard" },
@@ -142,7 +147,18 @@ export function DashboardSidebar({ activeItem, onItemClick }: DashboardSidebarPr
   };
 
   return (
-    <aside className="dashboard-sidebar">
+    <aside className={`dashboard-sidebar ${isMobileOpen ? "mobile-open" : ""}`}>
+      <div className="sidebar-mobile-header">
+        <span className="sidebar-mobile-title">Menu</span>
+        <button
+          type="button"
+          className="sidebar-mobile-close"
+          onClick={onClose}
+          aria-label="Close menu"
+        >
+          ×
+        </button>
+      </div>
       <nav className="sidebar-nav">
         <ul className="sidebar-list">
           {sidebarItems.map((item) => (

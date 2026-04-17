@@ -14,6 +14,7 @@ export function Dashboard() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeItem, setActiveItem] = useState("Dashboard");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { status } = useSession();
 
   // Sync activeItem with URL tab parameter
@@ -50,6 +51,27 @@ export function Dashboard() {
       localStorage.setItem("activeDashboardTab", activeItem);
     }
   }, [activeItem]);
+
+  useEffect(() => {
+    setIsSidebarOpen(false);
+  }, [activeItem]);
+
+  useEffect(() => {
+    if (!isSidebarOpen) {
+      return;
+    }
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsSidebarOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [isSidebarOpen]);
 
   useEffect(() => {
     let isMounted = true;
@@ -248,7 +270,36 @@ export function Dashboard() {
     <div className="dashboard-container">
       <DashboardHeader user={user} onSignOut={handleSignOut} />
       <div className="dashboard-body">
-        <DashboardSidebar activeItem={activeItem} onItemClick={setActiveItem} />
+        <div className="dashboard-mobile-nav">
+          <button
+            type="button"
+            className="dashboard-sidebar-toggle"
+            onClick={() => setIsSidebarOpen(true)}
+            aria-label="Open navigation menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <span className="dashboard-mobile-nav-title">{activeItem}</span>
+        </div>
+        {isSidebarOpen ? (
+          <button
+            type="button"
+            className="dashboard-sidebar-overlay"
+            onClick={() => setIsSidebarOpen(false)}
+            aria-label="Close navigation menu"
+          />
+        ) : null}
+        <DashboardSidebar
+          activeItem={activeItem}
+          isMobileOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
+          onItemClick={(item) => {
+            setActiveItem(item);
+            setIsSidebarOpen(false);
+          }}
+        />
         <DashboardContent 
           user={user} 
           activeItem={activeItem} 
