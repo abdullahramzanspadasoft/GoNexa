@@ -305,7 +305,7 @@ export function Login() {
           {!showAlternatives && (
             <>
           <div className="login-divider">
-            <span>Or register with</span>
+            <span>Or registhhsuahdugsaudgausgduaer with</span>
           </div>
 
           <div className="login-social">
