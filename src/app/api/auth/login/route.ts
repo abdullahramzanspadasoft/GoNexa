@@ -8,6 +8,7 @@ import User from "@/models/User";
 const DUMMY_EMAIL = "test@gmail.com";
 const DUMMY_PASSWORD = "testemail";
 const DUMMY_USER_ID = "dummy_user_12345";
+const BCRYPT_HASH_REGEX = /^\$2[aby]\$\d{2}\$/;
 
 export async function POST(request: Request) {
   try {
@@ -55,7 +56,31 @@ export async function POST(request: Request) {
       );
     }
 
-    const isPasswordValid = await bcrypt.compare(String(password), user.password);
+    if (!user.password) {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            "This account does not have a password yet. Sign in with Google or set a password via signup.",
+        },
+        { status: 400 }
+      );
+    }
+
+    let isPasswordValid = false;
+    const incomingPassword = String(password);
+
+    if (BCRYPT_HASH_REGEX.test(String(user.password))) {
+      isPasswordValid = await bcrypt.compare(incomingPassword, String(user.password));
+    } else {
+      // Legacy compatibility: if a plain password exists, allow once and migrate to bcrypt hash.
+      isPasswordValid = String(user.password) === incomingPassword;
+      if (isPasswordValid) {
+        user.password = await bcrypt.hash(incomingPassword, 10);
+        await user.save();
+      }
+    }
+
     if (!isPasswordValid) {
       return NextResponse.json(
         { success: false, message: "Invalid email or password" },

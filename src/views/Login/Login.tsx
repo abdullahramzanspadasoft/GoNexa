@@ -17,6 +17,7 @@ export function Login() {
   const [error, setError] = useState("");
   const [showAlternatives, setShowAlternatives] = useState(false);
   const [googleError, setGoogleError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -114,7 +115,7 @@ export function Login() {
       });
       // Note: This will redirect, so code after this won't execute on success
       // Errors are handled via URL parameters in the useEffect hook above
-    } catch (err) {
+    } catch {
       const errorMessage = "Google sign-in is currently unavailable. Use email and password instead.";
       setError(errorMessage);
       setGoogleError(true);
@@ -134,6 +135,10 @@ export function Login() {
       [e.target.name]: e.target.value,
     });
     setError("");
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -254,18 +259,31 @@ export function Login() {
             />
             <div className="login-password">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Enter your Password"
                 value={formData.password}
                 onChange={handleChange}
+                autoComplete={isSignup ? "new-password" : "current-password"}
                 required
               />
-              <span className="login-eye">
-                <svg fill="#fff" width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M21.92,11.6C19.9,6.91,16.1,4,12,4S4.1,6.91,2.08,11.6a1,1,0,0,0,0,.8C4.1,17.09,7.9,20,12,20s7.9-2.91,9.92-7.6A1,1,0,0,0,21.92,11.6ZM12,18c-3.17,0-6.17-2.29-7.9-6C5.83,8.29,8.83,6,12,6s6.17,2.29,7.9,6C18.17,15.71,15.17,18,12,18ZM12,8a4,4,0,1,0,4,4A4,4,0,0,0,12,8Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,14Z"/>
-                </svg>
-              </span>
+              <button
+                type="button"
+                className="login-eye"
+                onClick={togglePasswordVisibility}
+                onMouseDown={(e) => e.preventDefault()}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? (
+                  <svg fill="#fff" width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12,5A12.3,12.3,0,0,0,1.52,10.65a2,2,0,0,0,0,2.7A12.29,12.29,0,0,0,12,19a12.29,12.29,0,0,0,10.48-5.65,2,2,0,0,0,0-2.7A12.3,12.3,0,0,0,12,5Zm8.89,7.15A10.29,10.29,0,0,1,12,17a10.29,10.29,0,0,1-8.89-4.85,10.29,10.29,0,0,1,17.78,0ZM12,8a4,4,0,1,0,4,4A4,4,0,0,0,12,8Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,14Z" />
+                  </svg>
+                ) : (
+                  <svg fill="#fff" width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22.5,11.43a12.1,12.1,0,0,0-3.09-3.68L20.7,6.46a1,1,0,0,0-1.4-1.42L17.8,6.55A12.64,12.64,0,0,0,12,5a12.29,12.29,0,0,0-10.48,5.65,2,2,0,0,0,0,2.7,12.35,12.35,0,0,0,4.2,3.77L3.3,19.54A1,1,0,1,0,4.7,21l16-16a1,1,0,0,0-1.4-1.42L16.93,5.92A14.26,14.26,0,0,1,22.5,11.43Zm-1.61.72A10.26,10.26,0,0,1,15.4,16.4l1.44-1.44A4,4,0,0,0,12,9.16l1.51-1.51A10.22,10.22,0,0,1,20.89,12.15ZM12,11a1,1,0,0,1,1,1,.93.93,0,0,1-.07.35l-1.28-1.28A.93.93,0,0,1,12,11Zm-8.89,1.15a10.34,10.34,0,0,1,4.23-3.71L8.7,7.09a4,4,0,0,0,5.73,5.73l-1.47,1.47-.05.05L8.7,18.55A10.3,10.3,0,0,1,3.11,12.15Z" />
+                  </svg>
+                )}
+              </button>
             </div>
 
             {!isSignup && (

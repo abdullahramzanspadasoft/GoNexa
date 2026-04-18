@@ -19,6 +19,43 @@ export async function POST(request: Request) {
 
     const existingUser = await User.findOne({ email: String(email).toLowerCase() });
     if (existingUser) {
+      // If account exists via OAuth (no password), allow setting password through signup form.
+      if (!existingUser.password) {
+        const hashedPassword = await bcrypt.hash(String(password), 10);
+        existingUser.password = hashedPassword;
+
+        if (!existingUser.firstName && firstName) {
+          existingUser.firstName = String(firstName);
+        }
+        if (!existingUser.lastName && lastName) {
+          existingUser.lastName = String(lastName);
+        }
+
+        await existingUser.save();
+
+        const token = jwt.sign(
+          { userId: existingUser._id },
+          process.env.JWT_SECRET as string,
+          { expiresIn: "7d" }
+        );
+
+        return NextResponse.json({
+          success: true,
+          message: "Password set successfully for existing account",
+          data: {
+            user: {
+              id: existingUser._id,
+              firstName: existingUser.firstName,
+              lastName: existingUser.lastName,
+              email: existingUser.email,
+              profileImage: existingUser.profileImage,
+              createdAt: existingUser.createdAt,
+            },
+            token,
+          },
+        });
+      }
+
       return NextResponse.json(
         { success: false, message: "User already exists with this email" },
         { status: 400 }
