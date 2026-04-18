@@ -451,9 +451,16 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
     }
   };
 
-  const socialChannels = [
+  const socialChannels: {
+    name: string;
+    iconPath: string;
+    /** Show icon only; no OAuth connect (Facebook / Instagram). */
+    oauthDisabled?: boolean;
+  }[] = [
     { name: "X", iconPath: "/X-Icon.svg" },
     { name: "Tiktok", iconPath: "/Tiktok-Icon.svg" },
+    { name: "Facebook", iconPath: "/Facebook-Icon.svg", oauthDisabled: true },
+    { name: "Instagram", iconPath: "/Instagram-Icon.svg", oauthDisabled: true },
     { name: "Threads", iconPath: "/Threads-Icon.svg" },
     { name: "Youtube", iconPath: "/Youtube-Icon.svg" },
     { name: "Pinterest", iconPath: "/Pinterest-Icon.svg" },
@@ -713,6 +720,7 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
         </button>
         <div className="dashboard-channels-grid">
           {socialChannels.map((channel) => {
+            const oauthDisabled = Boolean(channel.oauthDisabled);
             const isYouTube = channel.name === "Youtube";
             const isLinkedIn = channel.name === "Linkedin";
             const isTiktok = channel.name === "Tiktok";
@@ -739,8 +747,11 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
                       ? " channel-youtube-connected" 
                       : ""
                   }`}
+                  title={oauthDisabled ? "Coming soon" : undefined}
                   onClick={
-                    isConnected && !connecting && !disconnecting
+                    oauthDisabled
+                      ? undefined
+                      : isConnected && !connecting && !disconnecting
                       ? () => {
                           setShowDisconnectMenu(showDisconnectMenu === channel.name ? null : channel.name);
                         }
@@ -760,13 +771,14 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
                       : undefined
                   }
                   style={{
-                    cursor:
-                      isConnected ||
-                      ((isYouTube && !isConnected) ||
-                        (isLinkedIn && !isConnected) ||
-                        (isTiktok && !isConnected))
-                      ? "pointer" 
-                      : "default"
+                    cursor: oauthDisabled
+                      ? "default"
+                      : isConnected ||
+                          ((isYouTube && !isConnected) ||
+                            (isLinkedIn && !isConnected) ||
+                            (isTiktok && !isConnected))
+                        ? "pointer"
+                        : "default",
                   }}
                 >
                   {isYouTube && isConnected ? (

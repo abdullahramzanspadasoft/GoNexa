@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm ci --prefix .. && npm run build --prefix ..",
+    "build": "npm run build --prefix ..",
     "start": "node server.js",
     "dev": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,6 +19,9 @@
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.1.5"
+    "mongoose": "^9.1.5",
+    "next": "16.1.6",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   }
 }
