@@ -20,14 +20,6 @@ interface DashboardContentProps {
     linkedinName?: string | null;
     linkedinLogo?: string | null;
     linkedinConnected?: boolean;
-    instagramId?: string | null;
-    instagramName?: string | null;
-    instagramLogo?: string | null;
-    instagramConnected?: boolean;
-    facebookId?: string | null;
-    facebookName?: string | null;
-    facebookLogo?: string | null;
-    facebookConnected?: boolean;
     tiktokId?: string | null;
     tiktokName?: string | null;
     tiktokLogo?: string | null;
@@ -210,100 +202,6 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams?.get("linkedin_error"), searchParams?.get("linkedin_connected")]);
 
-  // Handle Instagram connection success/error from URL params
-  useEffect(() => {
-    const instagramError = searchParams?.get("instagram_error");
-    const instagramConnected = searchParams?.get("instagram_connected");
-
-    if (instagramError) {
-      let errorMessage = "Failed to connect Instagram account. Please try again.";
-
-      if (instagramError === "no_code") {
-        errorMessage = "Authorization code not received from Instagram. Please try again.";
-      } else if (instagramError === "token_exchange_failed") {
-        errorMessage = "Failed to exchange Instagram authorization code. Please try again.";
-      } else if (instagramError === "no_access_token") {
-        errorMessage = "Failed to get Instagram access token. Please try again.";
-      } else if (instagramError === "not_configured") {
-        errorMessage = "Instagram OAuth is not configured. Please contact support.";
-      } else if (instagramError === "unauthorized") {
-        errorMessage = "You must be logged in to connect Instagram.";
-      } else if (instagramError === "callback_failed") {
-        errorMessage = "Instagram callback failed. Please try again.";
-      } else if (instagramError.includes("access_denied")) {
-        errorMessage = "Instagram access denied. Please try again.";
-      }
-
-      setError(errorMessage);
-
-      const newUrl = new URL(window.location.href);
-      newUrl.searchParams.delete("instagram_error");
-      window.history.replaceState({}, "", newUrl.toString());
-    }
-
-    if (instagramConnected === "true") {
-      setSuccess(true);
-      setSuccessMessage("Instagram account connected successfully!");
-      setError(null);
-
-      const newUrl = new URL(window.location.href);
-      newUrl.searchParams.delete("instagram_connected");
-      window.history.replaceState({}, "", newUrl.toString());
-
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams?.get("instagram_error"), searchParams?.get("instagram_connected")]);
-
-  // Handle Facebook connection success/error from URL params
-  useEffect(() => {
-    const facebookError = searchParams?.get("facebook_error");
-    const facebookConnected = searchParams?.get("facebook_connected");
-
-    if (facebookError) {
-      let errorMessage = "Failed to connect Facebook account. Please try again.";
-
-      if (facebookError === "no_code") {
-        errorMessage = "Authorization code not received from Facebook. Please try again.";
-      } else if (facebookError === "token_exchange_failed") {
-        errorMessage = "Failed to exchange Facebook authorization code. Please try again.";
-      } else if (facebookError === "no_access_token") {
-        errorMessage = "Failed to get Facebook access token. Please try again.";
-      } else if (facebookError === "not_configured") {
-        errorMessage = "Facebook OAuth is not configured. Please contact support.";
-      } else if (facebookError === "unauthorized") {
-        errorMessage = "You must be logged in to connect Facebook.";
-      } else if (facebookError === "callback_failed") {
-        errorMessage = "Facebook callback failed. Please try again.";
-      } else if (facebookError.includes("access_denied")) {
-        errorMessage = "Facebook access denied. Please try again.";
-      }
-
-      setError(errorMessage);
-
-      const newUrl = new URL(window.location.href);
-      newUrl.searchParams.delete("facebook_error");
-      window.history.replaceState({}, "", newUrl.toString());
-    }
-
-    if (facebookConnected === "true") {
-      setSuccess(true);
-      setSuccessMessage("Facebook account connected successfully!");
-      setError(null);
-
-      const newUrl = new URL(window.location.href);
-      newUrl.searchParams.delete("facebook_connected");
-      window.history.replaceState({}, "", newUrl.toString());
-
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams?.get("facebook_error"), searchParams?.get("facebook_connected")]);
-
   // Handle TikTok connection success/error from URL params
   useEffect(() => {
     const tiktokError = searchParams?.get("tiktok_error");
@@ -411,52 +309,6 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
     }
   };
 
-  const startInstagramConnect = async () => {
-    setConnecting(true);
-    setError(null);
-    setSuccess(false);
-    setSuccessMessage(null);
-
-    try {
-      const response = await fetch("/api/instagram/connect");
-      const data = await response.json();
-
-      if (data.success && data.authUrl) {
-        window.location.href = data.authUrl;
-      } else {
-        setError(data.message || "Failed to initiate Instagram connection");
-        setConnecting(false);
-      }
-    } catch (err) {
-      console.error("Instagram connect error:", err);
-      setError("Failed to connect Instagram account. Please try again.");
-      setConnecting(false);
-    }
-  };
-
-  const startFacebookConnect = async () => {
-    setConnecting(true);
-    setError(null);
-    setSuccess(false);
-    setSuccessMessage(null);
-
-    try {
-      const response = await fetch("/api/facebook/connect");
-      const data = await response.json();
-
-      if (data.success && data.authUrl) {
-        window.location.href = data.authUrl;
-      } else {
-        setError(data.message || "Failed to initiate Facebook connection");
-        setConnecting(false);
-      }
-    } catch (err) {
-      console.error("Facebook connect error:", err);
-      setError("Failed to connect Facebook account. Please try again.");
-      setConnecting(false);
-    }
-  };
-
   const startTiktokConnect = async () => {
     setConnecting(true);
     setError(null);
@@ -541,7 +393,7 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
     }
   };
 
-  const handleDisconnect = async (channelType: "youtube" | "linkedin" | "instagram" | "facebook" | "tiktok") => {
+  const handleDisconnect = async (channelType: "youtube" | "linkedin" | "tiktok") => {
     setDisconnecting(channelType);
     setError(null);
     setShowDisconnectMenu(null);
@@ -552,10 +404,6 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
           ? "/api/youtube/disconnect"
           : channelType === "linkedin"
           ? "/api/linkedin/disconnect"
-          : channelType === "instagram"
-          ? "/api/instagram/disconnect"
-          : channelType === "facebook"
-          ? "/api/facebook/disconnect"
           : "/api/tiktok/disconnect";
       const response = await fetch(endpoint, {
         method: "POST",
@@ -569,10 +417,6 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
             ? "YouTube channel disconnected successfully!"
             : channelType === "linkedin"
             ? "LinkedIn account disconnected successfully!"
-            : channelType === "instagram"
-            ? "Instagram account disconnected successfully!"
-            : channelType === "facebook"
-            ? "Facebook account disconnected successfully!"
             : "TikTok account disconnected successfully!"
         );
         // Refresh page to get updated user data
@@ -587,10 +431,6 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
                 ? "YouTube"
                 : channelType === "linkedin"
                 ? "LinkedIn"
-                : channelType === "instagram"
-                ? "Instagram"
-                : channelType === "facebook"
-                ? "Facebook"
                 : "TikTok"
             } account`
         );
@@ -604,10 +444,6 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
             ? "YouTube"
             : channelType === "linkedin"
             ? "LinkedIn"
-            : channelType === "instagram"
-            ? "Instagram"
-            : channelType === "facebook"
-            ? "Facebook"
             : "TikTok"
         } account. Please try again.`
       );
@@ -618,8 +454,6 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
   const socialChannels = [
     { name: "X", iconPath: "/X-Icon.svg" },
     { name: "Tiktok", iconPath: "/Tiktok-Icon.svg" },
-    { name: "Facebook", iconPath: "/Facebook-Icon.svg" },
-    { name: "Instagram", iconPath: "/Instagram-Icon.svg" },
     { name: "Threads", iconPath: "/Threads-Icon.svg" },
     { name: "Youtube", iconPath: "/Youtube-Icon.svg" },
     { name: "Pinterest", iconPath: "/Pinterest-Icon.svg" },
@@ -629,12 +463,6 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
   const hasYouTubeChannel = user?.youtubeChannelId && user?.youtubeChannelName;
   const hasLinkedInAccount = user?.linkedinId && user?.linkedinName;
   const hasLinkedInToken = Boolean(user?.linkedinConnected || user?.linkedinId);
-  const hasInstagramAccount = Boolean(
-    user?.instagramConnected || user?.instagramId || user?.instagramName
-  );
-  const hasFacebookAccount = Boolean(
-    user?.facebookConnected || user?.facebookId || user?.facebookName
-  );
   const hasTiktokAccount = Boolean(user?.tiktokConnected || user?.tiktokId || user?.tiktokName);
 
   // Auto-fetch LinkedIn profile data if connected but missing name or logo
@@ -887,24 +715,16 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
           {socialChannels.map((channel) => {
             const isYouTube = channel.name === "Youtube";
             const isLinkedIn = channel.name === "Linkedin";
-            const isInstagram = channel.name === "Instagram";
-            const isFacebook = channel.name === "Facebook";
             const isTiktok = channel.name === "Tiktok";
             const isConnected =
               (isYouTube && Boolean(hasYouTubeChannel)) ||
               (isLinkedIn && Boolean(hasLinkedInToken)) ||
-              (isInstagram && Boolean(hasInstagramAccount)) ||
-              (isFacebook && Boolean(hasFacebookAccount)) ||
               (isTiktok && Boolean(hasTiktokAccount));
             const displayName =
               isYouTube && user?.youtubeChannelName
                 ? user.youtubeChannelName
                 : isLinkedIn && (user?.linkedinName || user?.linkedinId)
                 ? user.linkedinName || "LinkedIn Account"
-                : isInstagram && (user?.instagramName || user?.instagramId)
-                ? user.instagramName || "Instagram Account"
-                : isFacebook && (user?.facebookName || user?.facebookId)
-                ? user.facebookName || "Facebook Account"
                 : isTiktok && (user?.tiktokName || user?.tiktokId)
                 ? user.tiktokName || "TikTok Account"
                 : channel.name;
@@ -915,8 +735,6 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
                   className={`channel-icon-wrapper${
                     (isYouTube && isConnected) ||
                     (isLinkedIn && isConnected) ||
-                    (isInstagram && isConnected) ||
-                    (isFacebook && isConnected) ||
                     (isTiktok && isConnected)
                       ? " channel-youtube-connected" 
                       : ""
@@ -928,8 +746,6 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
                         }
                       : ((isYouTube && !isConnected) ||
                           (isLinkedIn && !isConnected) ||
-                          (isInstagram && !isConnected) ||
-                          (isFacebook && !isConnected) ||
                           (isTiktok && !isConnected)) &&
                         !connecting
                       ? () => {
@@ -937,10 +753,6 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
                             void startYouTubeConnect();
                           } else if (isLinkedIn) {
                             void startLinkedInConnect();
-                          } else if (isInstagram) {
-                            void startInstagramConnect();
-                          } else if (isFacebook) {
-                            void startFacebookConnect();
                           } else if (isTiktok) {
                             void startTiktokConnect();
                           }
@@ -952,8 +764,6 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
                       isConnected ||
                       ((isYouTube && !isConnected) ||
                         (isLinkedIn && !isConnected) ||
-                        (isInstagram && !isConnected) ||
-                        (isFacebook && !isConnected) ||
                         (isTiktok && !isConnected))
                       ? "pointer" 
                       : "default"
@@ -1045,90 +855,6 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
                         />
                       </div>
                     </>
-                  ) : isInstagram && isConnected ? (
-                    <>
-                      <div className="channel-avatar-ring">
-                        <img
-                          src={
-                            user?.instagramLogo && user.instagramLogo.trim()
-                              ? user.instagramLogo
-                              : "/Instagram-Icon.svg"
-                          }
-                          alt={displayName || "Instagram Account"}
-                          className="channel-avatar-img"
-                          crossOrigin="anonymous"
-                          referrerPolicy="no-referrer"
-                          loading="eager"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            console.error("Failed to load Instagram logo:", {
-                              originalUrl: user?.instagramLogo,
-                              currentSrc: target.src,
-                              error: e,
-                            });
-                            if (target.src !== window.location.origin + "/Instagram-Icon.svg") {
-                              target.src = "/Instagram-Icon.svg";
-                            }
-                          }}
-                          onLoad={() => {
-                            console.log("Instagram logo loaded successfully:", {
-                              url: user?.instagramLogo,
-                              displayName,
-                            });
-                          }}
-                        />
-                      </div>
-                      <div className="channel-check-badge">✓</div>
-                      <div className="channel-youtube-badge">
-                        <img
-                          src="/Instagram-Icon.svg"
-                          alt="Instagram"
-                          className="channel-youtube-badge-img"
-                        />
-                      </div>
-                    </>
-                  ) : isFacebook && isConnected ? (
-                    <>
-                      <div className="channel-avatar-ring">
-                        <img
-                          src={
-                            user?.facebookLogo && user.facebookLogo.trim()
-                              ? user.facebookLogo
-                              : "/Facebook-Icon.svg"
-                          }
-                          alt={displayName || "Facebook Account"}
-                          className="channel-avatar-img"
-                          crossOrigin="anonymous"
-                          referrerPolicy="no-referrer"
-                          loading="eager"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            console.error("Failed to load Facebook logo:", {
-                              originalUrl: user?.facebookLogo,
-                              currentSrc: target.src,
-                              error: e,
-                            });
-                            if (target.src !== window.location.origin + "/Facebook-Icon.svg") {
-                              target.src = "/Facebook-Icon.svg";
-                            }
-                          }}
-                          onLoad={() => {
-                            console.log("Facebook logo loaded successfully:", {
-                              url: user?.facebookLogo,
-                              displayName,
-                            });
-                          }}
-                        />
-                      </div>
-                      <div className="channel-check-badge">✓</div>
-                      <div className="channel-youtube-badge">
-                        <img
-                          src="/Facebook-Icon.svg"
-                          alt="Facebook"
-                          className="channel-youtube-badge-img"
-                        />
-                      </div>
-                    </>
                   ) : isTiktok && isConnected ? (
                     <>
                       <div className="channel-avatar-ring">
@@ -1179,8 +905,6 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
                   className={`channel-name${
                     (isYouTube && isConnected) ||
                     (isLinkedIn && isConnected) ||
-                    (isInstagram && isConnected) ||
-                    (isFacebook && isConnected) ||
                     (isTiktok && isConnected)
                       ? " channel-name-connected"
                       : ""
@@ -1213,10 +937,6 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
                           void handleDisconnect("youtube");
                         } else if (isLinkedIn) {
                           void handleDisconnect("linkedin");
-                        } else if (isInstagram) {
-                          void handleDisconnect("instagram");
-                        } else if (isFacebook) {
-                          void handleDisconnect("facebook");
                         } else if (isTiktok) {
                           void handleDisconnect("tiktok");
                         }
@@ -1227,10 +947,6 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
                           ? "youtube"
                           : isLinkedIn
                           ? "linkedin"
-                          : isInstagram
-                          ? "instagram"
-                          : isFacebook
-                          ? "facebook"
                           : "tiktok")
                       }
                       style={{
@@ -1245,10 +961,6 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
                             ? "youtube"
                             : isLinkedIn
                             ? "linkedin"
-                            : isInstagram
-                            ? "instagram"
-                            : isFacebook
-                            ? "facebook"
                             : "tiktok")
                             ? "not-allowed"
                             : "pointer",
@@ -1258,10 +970,6 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
                             ? "youtube"
                             : isLinkedIn
                             ? "linkedin"
-                            : isInstagram
-                            ? "instagram"
-                            : isFacebook
-                            ? "facebook"
                             : "tiktok")
                             ? "#999"
                             : "#e74c3c",
@@ -1274,10 +982,6 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
                         ? "youtube"
                         : isLinkedIn
                         ? "linkedin"
-                        : isInstagram
-                        ? "instagram"
-                        : isFacebook
-                        ? "facebook"
                         : "tiktok")
                         ? "Disconnecting..."
                         : "Disconnect Channel"}

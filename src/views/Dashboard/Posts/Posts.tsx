@@ -633,56 +633,6 @@ export function Posts() {
                   cursor: "not-allowed"
                 }}>
                   <img 
-                    src="/Facebook-Icon.svg" 
-                    alt="Facebook" 
-                    width="40" 
-                    height="40" 
-                    style={{ objectFit: "contain", opacity: 0.6 }}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = "none";
-                    }}
-                  />
-                  <span style={{ flex: 1, textAlign: "left", fontWeight: 600, fontSize: "16px", color: "#666" }}>Facebook</span>
-                  <span style={{ fontSize: "12px", color: "#999", padding: "4px 8px", background: "#e0e0e0", borderRadius: "4px" }}>Coming soon</span>
-                </div>
-                <div style={{ 
-                  padding: "20px", 
-                  border: "2px solid #e0e0e0", 
-                  borderRadius: "12px", 
-                  background: "#f9f9f9", 
-                  display: "flex", 
-                  alignItems: "center", 
-                  gap: "16px", 
-                  opacity: 0.7,
-                  cursor: "not-allowed"
-                }}>
-                  <img 
-                    src="/Instagram-Icon.svg" 
-                    alt="Instagram" 
-                    width="40" 
-                    height="40" 
-                    style={{ objectFit: "contain", opacity: 0.6 }}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = "none";
-                    }}
-                  />
-                  <span style={{ flex: 1, textAlign: "left", fontWeight: 600, fontSize: "16px", color: "#666" }}>Instagram</span>
-                  <span style={{ fontSize: "12px", color: "#999", padding: "4px 8px", background: "#e0e0e0", borderRadius: "4px" }}>Coming soon</span>
-                </div>
-                <div style={{ 
-                  padding: "20px", 
-                  border: "2px solid #e0e0e0", 
-                  borderRadius: "12px", 
-                  background: "#f9f9f9", 
-                  display: "flex", 
-                  alignItems: "center", 
-                  gap: "16px", 
-                  opacity: 0.7,
-                  cursor: "not-allowed"
-                }}>
-                  <img 
                     src="/Tiktok-Icon.svg" 
                     alt="TikTok" 
                     width="40" 
