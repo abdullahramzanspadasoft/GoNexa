@@ -5,6 +5,7 @@ import crypto from "crypto";
 
 import connectDB from "@/lib/mongodb";
 import User from "@/models/User";
+import { normalizeOAuthRedirectUri, trimOAuthEnv } from "@/lib/oauthEnv";
 
 export async function GET() {
   try {
@@ -32,10 +33,12 @@ export async function GET() {
       });
     }
 
-    const clientKey = (process.env.TIKTOK_CLIENT_KEY || process.env.TIKTOK_CLIENT_ID)?.trim();
-    const clientSecret = process.env.TIKTOK_CLIENT_SECRET?.trim();
-    const redirectUri =
-      process.env.TIKTOK_REDIRECT_URI?.trim() || `${process.env.NEXTAUTH_URL}/auth/tiktok/callback`;
+    const clientKey = trimOAuthEnv(process.env.TIKTOK_CLIENT_KEY || process.env.TIKTOK_CLIENT_ID);
+    const clientSecret = trimOAuthEnv(process.env.TIKTOK_CLIENT_SECRET);
+    const redirectUri = normalizeOAuthRedirectUri(
+      trimOAuthEnv(process.env.TIKTOK_REDIRECT_URI) ||
+        `${trimOAuthEnv(process.env.NEXTAUTH_URL) || "http://localhost:3000"}/auth/tiktok/callback`
+    );
 
     if (!clientKey) {
       console.error("TikTok OAuth Error: TIKTOK_CLIENT_KEY is not set or empty");

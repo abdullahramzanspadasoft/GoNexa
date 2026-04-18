@@ -5,6 +5,7 @@ import { authOptions } from "../../../api/auth/[...nextauth]/route";
 
 import connectDB from "@/lib/mongodb";
 import User from "@/models/User";
+import { normalizeOAuthRedirectUri, trimOAuthEnv } from "@/lib/oauthEnv";
 
 export async function GET(request: Request) {
   try {
@@ -35,10 +36,12 @@ export async function GET(request: Request) {
       return NextResponse.redirect(`${baseUrl}/dashboard?tab=Accounts`);
     }
 
-    const clientKey = (process.env.TIKTOK_CLIENT_KEY || process.env.TIKTOK_CLIENT_ID)?.trim();
-    const clientSecret = process.env.TIKTOK_CLIENT_SECRET?.trim();
-    const redirectUri =
-      (process.env.TIKTOK_REDIRECT_URI?.trim() || `${process.env.NEXTAUTH_URL}/auth/tiktok/callback`).trim();
+    const clientKey = trimOAuthEnv(process.env.TIKTOK_CLIENT_KEY || process.env.TIKTOK_CLIENT_ID);
+    const clientSecret = trimOAuthEnv(process.env.TIKTOK_CLIENT_SECRET);
+    const redirectUri = normalizeOAuthRedirectUri(
+      trimOAuthEnv(process.env.TIKTOK_REDIRECT_URI) ||
+        `${trimOAuthEnv(process.env.NEXTAUTH_URL) || "http://localhost:3000"}/auth/tiktok/callback`
+    );
 
     if (!clientKey) {
       console.error("TikTok OAuth Error: TIKTOK_CLIENT_KEY is not set or empty");
@@ -78,17 +81,29 @@ export async function GET(request: Request) {
 
     if (!tokenResponse.ok) {
       const tokenErr = await tokenResponse.text().catch(() => "");
-      const tokenErrJson = await tokenResponse.json().catch(() => null);
+      let tokenErrJson: { error?: string; error_description?: string } | null = null;
+      try {
+        tokenErrJson = JSON.parse(tokenErr) as typeof tokenErrJson;
+      } catch {
+        tokenErrJson = null;
+      }
       console.error("TikTok token exchange error:", tokenErr);
       console.error("TikTok token exchange error details:", tokenErrJson);
-      
-      // Check for specific error types
+
       let errorType = "token_exchange_failed";
-      if (tokenErr.includes("client_key") || tokenErr.includes("invalid_client") || 
-          (tokenErrJson && (tokenErrJson.error?.includes("client_key") || tokenErrJson.error_description?.includes("client_key")))) {
+      if (
+        tokenErr.includes("client_key") ||
+        tokenErr.includes("invalid_client") ||
+        (tokenErrJson &&
+          (String(tokenErrJson.error || "").includes("client_key") ||
+            String(tokenErrJson.error_description || "").includes("client_key")))
+      ) {
         errorType = "invalid_client_key";
-      } else if (tokenErr.includes("redirect_uri") || tokenErr.includes("redirect_uri_mismatch") ||
-                 (tokenErrJson && tokenErrJson.error?.includes("redirect_uri"))) {
+      } else if (
+        tokenErr.includes("redirect_uri") ||
+        tokenErr.includes("redirect_uri_mismatch") ||
+        (tokenErrJson && String(tokenErrJson.error || "").includes("redirect_uri"))
+      ) {
         errorType = "redirect_uri_mismatch";
       }
       
