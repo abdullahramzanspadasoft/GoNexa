@@ -629,8 +629,12 @@ export function DashboardContent({ user, activeItem, onUserUpdate }: DashboardCo
   const hasYouTubeChannel = user?.youtubeChannelId && user?.youtubeChannelName;
   const hasLinkedInAccount = user?.linkedinId && user?.linkedinName;
   const hasLinkedInToken = Boolean(user?.linkedinConnected || user?.linkedinId);
-  const hasInstagramAccount = user?.instagramId && user?.instagramName;
-  const hasFacebookAccount = user?.facebookId && user?.facebookName;
+  const hasInstagramAccount = Boolean(
+    user?.instagramConnected || user?.instagramId || user?.instagramName
+  );
+  const hasFacebookAccount = Boolean(
+    user?.facebookConnected || user?.facebookId || user?.facebookName
+  );
   const hasTiktokAccount = Boolean(user?.tiktokConnected || user?.tiktokId || user?.tiktokName);
 
   // Auto-fetch LinkedIn profile data if connected but missing name or logo

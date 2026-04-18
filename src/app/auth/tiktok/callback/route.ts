@@ -7,16 +7,21 @@ import connectDB from "@/lib/mongodb";
 import User from "@/models/User";
 import { normalizeOAuthRedirectUri, trimOAuthEnv } from "@/lib/oauthEnv";
 
+type TikTokTokenErrJson = {
+  error?: string;
+  error_description?: string;
+};
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const code = searchParams.get("code");
     const state = searchParams.get("state");
-    const error = searchParams.get("error");
+    const oauthError = searchParams.get("error");
     const baseUrl = process.env.NEXTAUTH_URL || "";
 
-    if (error) {
-      return NextResponse.redirect(`${baseUrl}/dashboard?tab=Accounts&tiktok_error=${encodeURIComponent(error)}`);
+    if (oauthError) {
+      return NextResponse.redirect(`${baseUrl}/dashboard?tab=Accounts&tiktok_error=${encodeURIComponent(oauthError)}`);
     }
 
     if (!code) {
@@ -81,28 +86,30 @@ export async function GET(request: Request) {
 
     if (!tokenResponse.ok) {
       const tokenErr = await tokenResponse.text().catch(() => "");
-      let tokenErrJson: { error?: string; error_description?: string } | null = null;
+      let tokenErrJson: TikTokTokenErrJson | null = null;
       try {
-        tokenErrJson = JSON.parse(tokenErr) as typeof tokenErrJson;
+        tokenErrJson = JSON.parse(tokenErr) as TikTokTokenErrJson;
       } catch {
         tokenErrJson = null;
       }
       console.error("TikTok token exchange error:", tokenErr);
       console.error("TikTok token exchange error details:", tokenErrJson);
 
+      const errMsg = tokenErrJson?.error ?? "";
+      const errDesc = tokenErrJson?.error_description ?? "";
+
       let errorType = "token_exchange_failed";
       if (
         tokenErr.includes("client_key") ||
         tokenErr.includes("invalid_client") ||
-        (tokenErrJson &&
-          (String(tokenErrJson.error || "").includes("client_key") ||
-            String(tokenErrJson.error_description || "").includes("client_key")))
+        String(errMsg).includes("client_key") ||
+        String(errDesc).includes("client_key")
       ) {
         errorType = "invalid_client_key";
       } else if (
         tokenErr.includes("redirect_uri") ||
         tokenErr.includes("redirect_uri_mismatch") ||
-        (tokenErrJson && String(tokenErrJson.error || "").includes("redirect_uri"))
+        String(errMsg).includes("redirect_uri")
       ) {
         errorType = "redirect_uri_mismatch";
       }
